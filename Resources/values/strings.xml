@@ -1,0 +1,10 @@
+<resources>
+  <string name="app_name">trackMe</string>
+  <string name="action_settings">Settings</string>
+  <string name="favorite">מועדפים</string>
+  <string name="src_by_num">חיפוש לפי קו</string>
+  <string name="src_by_station">חיפוש לפי תחנה</string>
+  <string name="src_by_adr">חיפוש לפי מוצא ויעד</string>
+  <string name="map">מפה</string>
+  <string name="train">רכבת</string>
+</resources>
