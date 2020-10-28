@@ -3805,10 +3805,13 @@ namespace trackMe
 			public const int visible = 2131230914;
 			
 			// aapt resource value: 0x7F0800C3
-			public const int withText = 2131230915;
+			public const int webView = 2131230915;
 			
 			// aapt resource value: 0x7F0800C4
-			public const int wrap_content = 2131230916;
+			public const int withText = 2131230916;
+			
+			// aapt resource value: 0x7F0800C5
+			public const int wrap_content = 2131230917;
 			
 			static Id()
 			{

@@ -73,6 +73,7 @@
     <Compile Include="SrcByAdd.cs" />
     <Compile Include="SrcByNum.cs" />
     <Compile Include="SrcByStation.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Train.cs" />
   </ItemGroup>
   <ItemGroup>

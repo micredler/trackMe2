@@ -28,8 +28,8 @@ namespace trackMe
             };
 
             Button btnMap = FindViewById<Button>(Resource.Id.btn_map);
-            btnMap.Click += async delegate {
-                await Launcher.OpenAsync("geo:0,0?q=394+Pacific+Ave+San+Francisco+CA");
+            btnMap.Click += delegate {
+                StartActivity(typeof(Map));
             };
 
             Button btnSrcNum = FindViewById<Button>(Resource.Id.btn_src_num);
