@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:p4="http://xamarin.com/mono/android/designer"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/linearLayout2">
     <TextView
         android:text="@string/src_by_station"
         android:textAlignment="center"
@@ -13,5 +15,54 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:id="@+id/textView1" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:id="@+id/space1"
+        android:layout_marginBottom="0.0dp"
+        android:layout_marginLeft="0.0dp" />
+    <EditText
+        android:text="32902"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_staion_num" />
+    <Button
+        android:text="חיפוש"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_search_station" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:id="@+id/table_by_station">
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+        >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מרחק"
+                android:layout_marginLeft="5px"
+                android:layout_marginRight="5px"
+                android:id="@+id/textView4" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="שעת הגעה"
+                android:layout_marginLeft="5px"
+                android:layout_marginRight="5px"
+                android:id="@+id/textView3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מספר קו"
+                android:id="@+id/textView2"
+                android:layout_marginRight="8px" />
+        </TableRow>
+    </TableLayout>
+    
 </LinearLayout>
