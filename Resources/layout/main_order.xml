@@ -18,23 +18,16 @@
         android:text="@string/src_by_num"
         android:layout_width="match_parent"
         android:layout_height="78.0dp"
-         android:textSize="@dimen/abc_dialog_padding_material"
+        android:textSize="@dimen/abc_dialog_padding_material"
         android:textStyle="bold"
         android:id="@+id/btn_src_num" />
     <Button
         android:text="@string/src_by_station"
         android:layout_width="match_parent"
         android:layout_height="78.0dp"
-         android:textSize="@dimen/abc_dialog_padding_material"
+        android:textSize="@dimen/abc_dialog_padding_material"
         android:textStyle="bold"
         android:id="@+id/btn_src_station" />
-    <Button
-        android:text="@string/src_by_adr"
-        android:layout_width="match_parent"
-        android:layout_height="78.0dp"
-         android:textSize="@dimen/abc_dialog_padding_material"
-        android:textStyle="bold"
-        android:id="@+id/btn_src_add" />
     <Button
         android:text="@string/map"
         android:layout_width="match_parent"
@@ -49,4 +42,11 @@
         android:textSize="@dimen/abc_dialog_padding_material"
         android:textStyle="bold"
         android:id="@+id/btn_train" />
+    <!--<Button
+        android:text="map test"
+        android:layout_width="match_parent"
+        android:layout_height="78.0dp"
+        android:textSize="@dimen/abc_dialog_padding_material"
+        android:textStyle="bold"
+        android:id="@+id/btn_maptst" />-->
 </LinearLayout>

@@ -39,8 +39,16 @@ namespace trackMe
             const string STATION_PARAM = "MonitoringRef=";
             ApiService apiService = new ApiService();
             ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + stationNum);
-            List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
-            setTableData(visits, mTableLayout);
+            if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null))
+            {
+
+                List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
+                setTableData(visits, mTableLayout);
+            }
+            else
+            {
+                Alert("הודעת מערכת", "אין נתונים להצגה");
+            }
             //System.Diagnostics.Debug.WriteLine(j);
         }
 
@@ -68,7 +76,7 @@ namespace trackMe
                 tv2.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv3 = new TextView(this);
-                tv3.Text = Row.MonitoredVehicleJourney.MonitoredCall.DistanceFromStop;
+                tv3.Text = Row.MonitoredVehicleJourney.DestinationRef;
                 tv3.TextAlignment = TextAlignment.ViewEnd;
                 tr.AddView(tv3);
                 tr.AddView(tv2);
@@ -76,6 +84,15 @@ namespace trackMe
                 mTableLayout.AddView(tr);
 
             }
+        }
+        public void Alert(string title, string msg)
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.SetTitle(title);
+            alert.SetMessage(msg);
+
+            Dialog dialog = alert.Create();
+            dialog.Show();
         }
     }
 }

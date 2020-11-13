@@ -13,5 +13,66 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:id="@+id/textView1" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:id="@+id/space1"
+        android:layout_marginBottom="0.0dp"
+        android:layout_marginLeft="0.0dp" />
+    <EditText
+        android:text="5"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_line_num" />
+    <Button
+        android:text="חיפוש"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_search_num" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:isScrollContainer="true"
+            android:id="@+id/table_by_num">
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+        >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="זמן הגעה ליעד"
+                    android:layout_marginLeft="5px"
+                    android:layout_marginRight="5px"
+                    android:id="@+id/textView1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="יעד"
+                    android:layout_marginLeft="5px"
+                    android:layout_marginRight="5px"
+                    android:id="@+id/textView4" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="שעת הגעה"
+                    android:layout_marginLeft="5px"
+                    android:layout_marginRight="5px"
+                    android:id="@+id/textView3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="מספר קו"
+                    android:id="@+id/textView2"
+                    android:layout_marginRight="8px" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
 </LinearLayout>
