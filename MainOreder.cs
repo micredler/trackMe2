@@ -6,6 +6,7 @@ using System.Text;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Database.Sqlite;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -17,10 +18,17 @@ namespace trackMe
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainOreder : Activity
     {
+        DBHelper db;
+        SQLiteDatabase sqliteDB;
+        LinearLayout container;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.main_order);
+
+            db = new DBHelper(this);
+            sqliteDB = db.WritableDatabase;
+            container = FindViewById<LinearLayout>(Resource.Id.container);
 
             Button btnFavorite = FindViewById<Button>(Resource.Id.btn_favorite);
             btnFavorite.Click += delegate {

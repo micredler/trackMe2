@@ -68,8 +68,13 @@
   <ItemGroup>
     <Compile Include="BL\ApiService.cs" />
     <Compile Include="BL\WebApiModels.cs" />
+    <Compile Include="DBHelper.cs" />
+    <Compile Include="DataBase.cs" />
+    <Compile Include="Data\StopStation.cs" />
     <Compile Include="Favorite.cs" />
+    <Compile Include="ListViewAdapter.cs" />
     <Compile Include="MainOreder.cs" />
+    <AndroidResource Include="Resources\layout\trackmedb.xml" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SrcByAdd.cs" />
@@ -82,6 +87,7 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\Raw\trackMeDB.db" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\colors.xml" />
@@ -114,6 +120,12 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="sqlite-net">
+      <Version>1.6.292</Version>
+    </PackageReference>
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.7.335</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>
