@@ -42,11 +42,14 @@ namespace trackMe
             ApiService apiService = new ApiService();
 
             ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + AND_SIGN + LINE_PARAM + lineNum + AND_SIGN + CALLS);
-            if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null))
+            if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
+                !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
             {
 
                 List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
-                setTableData(visits, mTableLayout);
+                DataGenerator dataGenerator = new DataGenerator();
+                dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "line");
+                //setTableData(visits, mTableLayout);
             }
             else
             {

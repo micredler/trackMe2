@@ -39,14 +39,22 @@
         android:id="@+id/table_by_station">
         <TableRow
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-        >
+            android:layout_width="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="זמן הגעה ליעד"
+                android:layout_marginLeft="5px"
+                android:layout_marginRight="5px"
+                android:id="@+id/textView1"
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="יעד"
                 android:layout_marginLeft="5px"
                 android:layout_marginRight="5px"
+                android:textStyle="bold"
                 android:id="@+id/textView4" />
 
             <TextView
@@ -55,14 +63,20 @@
                 android:text="שעת הגעה"
                 android:layout_marginLeft="5px"
                 android:layout_marginRight="5px"
+                android:textStyle="bold"
                 android:id="@+id/textView3" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="מספר קו"
                 android:id="@+id/textView2"
+                android:textStyle="bold"
                 android:layout_marginRight="8px" />
         </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:background="@android:color/black"
+            android:layout_height="3dp"/>
     </TableLayout>
 
 </LinearLayout>
