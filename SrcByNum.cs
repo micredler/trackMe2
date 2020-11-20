@@ -17,7 +17,7 @@ namespace trackMe
     [Activity(Label = "SrcByNum")]
     public class SrcByNum : Activity
     {
-        public string dbPAth = "trackMeDB.db";
+        public string dbPath = "trackMeDB.db";
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -37,16 +37,20 @@ namespace trackMe
 
         public async void GetData(string lineNum, TableLayout mTableLayout)
         {
-            const string STATION_PARAM = "MonitoringRef=all%26";
+            const string AND_SIGN = "%26";
+            const string STATION_PARAM = "MonitoringRef=all";
             const string LINE_PARAM = "LineRef=";
+            const string CALLS = "StopVisitDetailLevel=calls";
             ApiService apiService = new ApiService();
-            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + LINE_PARAM + lineNum);
+
+            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + AND_SIGN + LINE_PARAM + lineNum + AND_SIGN + CALLS);
             if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null))
             {
 
-            List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
-            setTableData(visits, mTableLayout);
-            } else
+                List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
+                setTableData(visits, mTableLayout);
+            }
+            else
             {
                 Alert("הודעת מערכת", "אין נתונים להצגה");
             }
@@ -78,11 +82,20 @@ namespace trackMe
                 tv2.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv3 = new TextView(this);
-                tv3.Text = Row.MonitoredVehicleJourney.DestinationRef;
+                tv3.Text = DBHelper.Read(dbPath, Row.MonitoredVehicleJourney.DestinationRef);
+                //tv3.Text = Row.MonitoredVehicleJourney.DestinationRef;
                 tv3.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv4 = new TextView(this);
-                tv4.Text = DBHelper.Read(dbPAth, Row.MonitoredVehicleJourney.DestinationRef);
+                if (Row.MonitoredVehicleJourney.OnwardCalls.OnwardCall.Count > 0)
+                {
+                    OnwardCall endStationCall = Row.MonitoredVehicleJourney.OnwardCalls.OnwardCall.Where(a => a.StopPointRef == Row.MonitoredVehicleJourney.DestinationRef).FirstOrDefault();
+                    tv4.Text = endStationCall is null ? "לא ידוע" : endStationCall.ExpectedArrivalTime.ToShortTimeString();
+                } else
+                {
+                    tv4.Text = tv2.Text;
+                }
+                //tv4.Text = Row.MonitoredVehicleJourney.DestinationRef;
                 tv4.TextAlignment = TextAlignment.ViewEnd;
 
                 tr.AddView(tv4);
