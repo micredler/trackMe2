@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="BL\ApiService.cs" />
     <Compile Include="BL\WebApiModels.cs" />
+    <Compile Include="Data\DBHelper.cs" />
     <Compile Include="Data\Stop.cs" />
     <Compile Include="Favorite.cs" />
     <Compile Include="MainOreder.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Train.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="trackMeDB.db" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
@@ -115,6 +117,9 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.7.335</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>
