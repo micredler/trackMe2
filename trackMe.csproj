@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BL\ApiService.cs" />
+    <Compile Include="BL\DataGenerator.cs" />
     <Compile Include="BL\WebApiModels.cs" />
     <Compile Include="Favorite.cs" />
     <Compile Include="MainOreder.cs" />
