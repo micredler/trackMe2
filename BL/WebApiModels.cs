@@ -19,7 +19,18 @@ public class MonitoredCall
     public string Order { get; set; }
     public DateTime ExpectedArrivalTime { get; set; }
     public string DistanceFromStop { get; set; }
-    public DateTime? AimedArrivalTime { get; set; }
+}
+
+public class OnwardCall
+{
+    public string StopPointRef { get; set; }
+    public string Order { get; set; }
+    public DateTime ExpectedArrivalTime { get; set; }
+}
+
+public class OnwardCalls
+{
+    public IList<OnwardCall> OnwardCall { get; set; }
 }
 
 public class MonitoredVehicleJourney
@@ -36,6 +47,7 @@ public class MonitoredVehicleJourney
     public string Velocity { get; set; }
     public string VehicleRef { get; set; }
     public MonitoredCall MonitoredCall { get; set; }
+    public OnwardCalls OnwardCalls { get; set; }
 }
 
 public class MonitoredStopVisit
@@ -48,13 +60,13 @@ public class MonitoredStopVisit
 
 public class StopMonitoringDelivery
 {
-    public string Version { get; set; }
-public DateTime ResponseTimestamp { get; set; }
-public string Status { get; set; }
-public IList<MonitoredStopVisit> MonitoredStopVisit { get; set; }
-    }
+    public string version { get; set; }
+    public DateTime ResponseTimestamp { get; set; }
+    public string Status { get; set; }
+    public IList<MonitoredStopVisit> MonitoredStopVisit { get; set; }
+}
 
-    public class ServiceDelivery
+public class ServiceDelivery
 {
     public DateTime ResponseTimestamp { get; set; }
     public string ProducerRef { get; set; }
@@ -63,6 +75,7 @@ public IList<MonitoredStopVisit> MonitoredStopVisit { get; set; }
     public string Status { get; set; }
     public IList<StopMonitoringDelivery> StopMonitoringDelivery { get; set; }
 }
+
 
 public class Siri
 {

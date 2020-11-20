@@ -69,7 +69,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מספר קו"
+                    android:text="תחנת מוצא"
                     android:id="@+id/textView2"
                     android:layout_marginRight="8px" />
             </TableRow>
