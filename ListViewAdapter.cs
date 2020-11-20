@@ -8,9 +8,8 @@ namespace trackMe
 {
     public class ViewHolder : Java.Lang.Object
     {
-        public TextView txtName { get; set; }
-        public TextView txtDepartment { get; set; }
-        public TextView txtEmail { get; set; }
+        public TextView txtStopName { get; set; }
+        public TextView txtStopDes { get; set; }
     }
     public class ListViewAdapter : BaseAdapter
     {

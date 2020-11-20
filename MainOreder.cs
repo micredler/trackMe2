@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Content.PM;
+using Android.Database;
 using Android.Database.Sqlite;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Xamarin.Essentials;
+using trackMe.Data;
 
 namespace trackMe
 {
@@ -29,24 +23,37 @@ namespace trackMe
             db = new DBHelper(this);
             sqliteDB = db.WritableDatabase;
             container = FindViewById<LinearLayout>(Resource.Id.container);
+            Button btnGetData;
+
+
+            // when somrthing happen ------> GetData();
+            btnGetData = FindViewById<Button>(Resource.Id.btnLoadData);
+            btnGetData.Click += delegate
+            {
+                GetData();
+            };
 
             Button btnFavorite = FindViewById<Button>(Resource.Id.btn_favorite);
-            btnFavorite.Click += delegate {
+            btnFavorite.Click += delegate
+            {
                 StartActivity(typeof(Favorite));
             };
 
             Button btnMap = FindViewById<Button>(Resource.Id.btn_map);
-            btnMap.Click += delegate {
+            btnMap.Click += delegate
+            {
                 StartActivity(typeof(Map));
             };
 
             Button btnSrcNum = FindViewById<Button>(Resource.Id.btn_src_num);
-            btnSrcNum.Click += delegate {
+            btnSrcNum.Click += delegate
+            {
                 StartActivity(typeof(SrcByNum));
             };
 
             Button btnSrcStation = FindViewById<Button>(Resource.Id.btn_src_station);
-            btnSrcStation.Click += delegate {
+            btnSrcStation.Click += delegate
+            {
                 StartActivity(typeof(SrcByStation));
             };
 
@@ -55,7 +62,8 @@ namespace trackMe
             //    StartActivity(typeof(SrcByAdd));
             //};
             Button btnTrain = FindViewById<Button>(Resource.Id.btn_train);
-            btnTrain.Click += delegate {
+            btnTrain.Click += delegate
+            {
                 StartActivity(typeof(Train));
             };
             //Button btnMaptst = FindViewById<Button>(Resource.Id.btn_maptst);
@@ -64,6 +72,26 @@ namespace trackMe
             //    var intent = new Intent(Intent.ActionView, uri);
             //    StartActivity(intent);
             //};
+        }
+
+        public void GetData()
+        {
+            ICursor selectData = sqliteDB.RawQuery("select * from stops", new string[] { });
+            if (selectData.Count > 0)
+            {
+                selectData.MoveToFirst();
+                StopStation stopStation = new StopStation();
+                stopStation.stop_name = selectData.GetString(selectData.GetColumnIndex("stop_name"));
+                stopStation.stop_des = selectData.GetString(selectData.GetColumnIndex("stop_des"));
+                selectData.Close();
+                LayoutInflater layoutInflater = (LayoutInflater)BaseContext.GetSystemService(Context.LayoutInflaterService);
+                View addView = layoutInflater.Inflate(Resource.Layout.data, null);
+                TextView txtStopName = addView.FindViewById<TextView>(Resource.Id.txtStopName);
+                TextView txtStopDes = addView.FindViewById<TextView>(Resource.Id.txtStopDes);
+                txtStopName.Text = stopStation.stop_name;
+                txtStopDes.Text = stopStation.stop_des;
+                container.AddView(addView);
+            }
         }
     }
 }

@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
+    <Button  
+        android:text="Load Data"  
+        android:layout_width="match_parent"  
+        android:layout_height="wrap_content"  
+        android:id="@+id/btnLoadData" />
+    <LinearLayout  
+        android:orientation="vertical"  
+        android:minWidth="25px"  
+        android:minHeight="25px"  
+        android:layout_width="match_parent"  
+        android:layout_height="wrap_content"  
+        android:id="@+id/container" />
     <Button
         android:text="@string/favorite"
         android:layout_width="match_parent"
