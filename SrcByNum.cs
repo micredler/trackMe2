@@ -17,7 +17,7 @@ namespace trackMe
     [Activity(Label = "SrcByNum")]
     public class SrcByNum : Activity
     {
-        public string dbPath = "trackMeDB.db";
+        public DBHelper dbHelper = new DBHelper();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -74,7 +74,7 @@ namespace trackMe
                 tr.LayoutParameters = tableRowLayoutparams;
 
                 TextView tv1 = new TextView(this);
-                tv1.Text = Row.MonitoredVehicleJourney.MonitoredCall.StopPointRef;
+                tv1.Text = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.MonitoredCall.StopPointRef);
                 tv1.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv2 = new TextView(this);
@@ -82,7 +82,7 @@ namespace trackMe
                 tv2.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv3 = new TextView(this);
-                tv3.Text = DBHelper.Read(dbPath, Row.MonitoredVehicleJourney.DestinationRef);
+                tv3.Text = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
                 //tv3.Text = Row.MonitoredVehicleJourney.DestinationRef;
                 tv3.TextAlignment = TextAlignment.ViewEnd;
 

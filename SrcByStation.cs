@@ -11,12 +11,15 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using trackMe.BL;
+using trackMe.Data;
 
 namespace trackMe
 {
     [Activity(Label = "SrcByStation")]
     public class SrcByStation : Activity
     {
+        public DBHelper dbHelper = new DBHelper();
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -76,7 +79,7 @@ namespace trackMe
                 tv2.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv3 = new TextView(this);
-                tv3.Text = Row.MonitoredVehicleJourney.DestinationRef;
+                tv3.Text = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
                 tv3.TextAlignment = TextAlignment.ViewEnd;
                 tr.AddView(tv3);
                 tr.AddView(tv2);

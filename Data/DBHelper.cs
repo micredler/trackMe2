@@ -9,42 +9,33 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using SQLite;
 
 namespace trackMe.Data
 {
     public class DBHelper
     {
+        public DBConnection dbConnection = new DBConnection();
         public DBHelper()
         {
 
         }
 
-        public static List<Stop> Read(string db_path)
+
+        public string ReadStationName(string stopCode)
         {
-            List<Stop> stops = new List<Stop>();
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            var stops = connection.Query<Stop>($"SELECT stop_name FROM stops WHERE stop_code = {stopCode}");
 
-            using (var connection = new SQLite.SQLiteConnection(db_path))
+            try
             {
-                stops = connection.Table<Stop>().ToList();
-
+                return stops[0].stop_name.ToString();
             }
-                return stops;
-        }
-        
-        public static string Read(string db_path, string stopCode)
-        {
-            List<Stop> stops = new List<Stop>();
 
-            using (var connection = new SQLite.SQLiteConnection(db_path))
+            catch (Exception)
             {
-                stops = connection.Table<Stop>().ToList();
-
+                return "שם התחנה לא ידוע";
             }
-            return stops.ToString(); ;
         }
-
-
-
-
     }
 }

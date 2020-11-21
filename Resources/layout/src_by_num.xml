@@ -20,7 +20,7 @@
         android:layout_marginBottom="0.0dp"
         android:layout_marginLeft="0.0dp" />
     <EditText
-        android:text="5"
+        android:text="991"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
