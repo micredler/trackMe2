@@ -6,20 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using trackMe.BL;
-using trackMe.Data;
 
 namespace trackMe
 {
     [Activity(Label = "SrcByStation")]
     public class SrcByStation : Activity
     {
-        public DBHelper dbHelper = new DBHelper();
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -39,14 +37,19 @@ namespace trackMe
 
         public async void GetData(string stationNum, TableLayout mTableLayout)
         {
+            const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=";
+            const string CALLS = "StopVisitDetailLevel=calls";
             ApiService apiService = new ApiService();
-            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + stationNum);
-            if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null))
+            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + stationNum + AND_SIGN + CALLS);
+            if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
+                !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
             {
 
                 List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
-                setTableData(visits, mTableLayout);
+                DataGenerator dataGenerator = new DataGenerator();
+                dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "station");
+                // setTableData(visits, mTableLayout);
             }
             else
             {
@@ -55,39 +58,6 @@ namespace trackMe
             //System.Diagnostics.Debug.WriteLine(j);
         }
 
-        public void setTableData(List<MonitoredStopVisit> data, TableLayout mTableLayout)
-        {
-            while (mTableLayout.ChildCount > 1)
-            {
-                mTableLayout.RemoveViewAt(1);
-            }
-            TableRow.LayoutParams tableRowLayoutparams = new TableRow.LayoutParams(
-                ViewGroup.LayoutParams.WrapContent,
-                ViewGroup.LayoutParams.WrapContent);
-
-            foreach (MonitoredStopVisit Row in data)
-            {
-                TableRow tr = new TableRow(this);
-
-                tr.LayoutParameters = tableRowLayoutparams;
-                TextView tv1 = new TextView(this);
-                tv1.Text = Row.MonitoredVehicleJourney.PublishedLineName;
-                tv1.TextAlignment = TextAlignment.ViewEnd;
-
-                TextView tv2 = new TextView(this);
-                tv2.Text = Row.MonitoredVehicleJourney.MonitoredCall.ExpectedArrivalTime.ToShortTimeString();
-                tv2.TextAlignment = TextAlignment.ViewEnd;
-
-                TextView tv3 = new TextView(this);
-                tv3.Text = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
-                tv3.TextAlignment = TextAlignment.ViewEnd;
-                tr.AddView(tv3);
-                tr.AddView(tv2);
-                tr.AddView(tv1);
-                mTableLayout.AddView(tr);
-
-            }
-        }
         public void Alert(string title, string msg)
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
