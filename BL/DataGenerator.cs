@@ -10,11 +10,13 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using trackMe.Data;
 
 namespace trackMe.BL
 {
     class DataGenerator
     {
+        DBHelper dbHelper = new DBHelper();
         public void SetTableData(List<MonitoredStopVisit> data, TableLayout mTableLayout, Context context, Resources resources
             , string searchType)
         {
@@ -41,7 +43,7 @@ namespace trackMe.BL
                         tv1.TextAlignment = TextAlignment.ViewEnd;
                         break;
                     case "line":
-                        tv1.Text = Row.MonitoredVehicleJourney.MonitoredCall.StopPointRef;
+                        tv1.Text = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.MonitoredCall.StopPointRef);
                         tv1.TextAlignment = TextAlignment.ViewEnd;
                         break;
                     default:
@@ -53,7 +55,7 @@ namespace trackMe.BL
                 tv2.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv3 = new TextView(context);
-                tv3.Text = Row.MonitoredVehicleJourney.DestinationRef;
+                tv3.Text = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
                 tv3.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv4 = new TextView(context);
