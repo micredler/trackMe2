@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -38,7 +39,7 @@ namespace trackMe.BL
                 TextView tv1 = new TextView(context);
                 switch (searchType)
                 {
-                    case "station":                      
+                    case "station":
                         tv1.Text = Row.MonitoredVehicleJourney.PublishedLineName;
                         tv1.TextAlignment = TextAlignment.ViewEnd;
                         break;
@@ -51,7 +52,7 @@ namespace trackMe.BL
                 }
 
                 TextView tv2 = new TextView(context);
-                tv2.Text = Row.MonitoredVehicleJourney.MonitoredCall.ExpectedArrivalTime.ToShortTimeString();
+                tv2.Text = DateTime.Parse(Row.MonitoredVehicleJourney.MonitoredCall.ExpectedArrivalTime.ToShortTimeString()).ToString("HH:mm", CultureInfo.CurrentCulture);
                 tv2.TextAlignment = TextAlignment.ViewEnd;
 
                 TextView tv3 = new TextView(context);
@@ -62,7 +63,7 @@ namespace trackMe.BL
                 if (Row.MonitoredVehicleJourney.OnwardCalls.OnwardCall.Count > 0)
                 {
                     OnwardCall endStationCall = Row.MonitoredVehicleJourney.OnwardCalls.OnwardCall.Where(a => a.StopPointRef == Row.MonitoredVehicleJourney.DestinationRef).FirstOrDefault();
-                    tv4.Text = endStationCall is null ? "לא ידוע" : endStationCall.ExpectedArrivalTime.ToShortTimeString();
+                    tv4.Text = endStationCall is null ? "לא ידוע" : DateTime.Parse(endStationCall.ExpectedArrivalTime.ToShortTimeString()).ToString("HH:mm", CultureInfo.CurrentCulture);
                 }
                 else
                 {
