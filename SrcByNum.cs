@@ -10,12 +10,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using trackMe.BL;
+using trackMe.Data;
 
 namespace trackMe
 {
     [Activity(Label = "SrcByNum")]
     public class SrcByNum : Activity
     {
+        DBHelper dBHelper = new DBHelper();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -33,15 +35,18 @@ namespace trackMe
 
         }
 
-        public async void GetData(string lineNum, TableLayout mTableLayout)
+        public async void GetData(string lineNumFromUser, TableLayout mTableLayout)
         {
             const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=all";
             const string LINE_PARAM = "LineRef=";
             const string CALLS = "StopVisitDetailLevel=calls";
+
+            string routeId = dBHelper.GetRouteIdFromDB(lineNumFromUser);
+
             ApiService apiService = new ApiService();
 
-            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + AND_SIGN + LINE_PARAM + lineNum + AND_SIGN + CALLS);
+            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + AND_SIGN + LINE_PARAM + routeId + AND_SIGN + CALLS);
             if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
                 !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
             {

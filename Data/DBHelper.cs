@@ -37,5 +37,23 @@ namespace trackMe.Data
                 return "שם התחנה לא ידוע";
             }
         }
+
+        internal string GetRouteIdFromDB(string lineNumFromUser)
+        {
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            var routeId = connection.Query<Route>($"SELECT * FROM routes WHERE route_short_name = {lineNumFromUser}");
+
+            try
+            {
+                // Now it return the first  Egged route but we need to add suport agency in c
+                return routeId.Where(r => r.route_type == 3).First().route_id.ToString();
+                
+            }
+
+            catch (Exception)
+            {
+                return "מספר הקו לא מופיע במערכת";
+            }
+        }
     }
 }
