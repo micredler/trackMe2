@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,5 +13,71 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:id="@+id/textView1" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50.5dp"
+        android:id="@+id/space1"
+        android:layout_marginBottom="0.0dp"
+        android:layout_marginLeft="0.0dp" />
+    <AutoCompleteTextView android:id="@+id/autocomplete_train"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"/>
+    <EditText
+        android:text="32902"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_train" />
+    <Button
+        android:text="חיפוש"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_search_train" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:id="@+id/table_by_train">
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="זמן הגעה ליעד"
+                android:layout_marginLeft="5px"
+                android:layout_marginRight="5px"
+                android:id="@+id/textView1"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="יעד"
+                android:layout_marginLeft="5px"
+                android:layout_marginRight="5px"
+                android:textStyle="bold"
+                android:id="@+id/textView4" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="שעת הגעה"
+                android:layout_marginLeft="5px"
+                android:layout_marginRight="5px"
+                android:textStyle="bold"
+                android:id="@+id/textView3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="רציף"
+                android:id="@+id/textView2"
+                android:textStyle="bold"
+                android:layout_marginRight="8px" />
+        </TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:background="@android:color/black"
+            android:layout_height="3dp"/>
+    </TableLayout>
 </LinearLayout>

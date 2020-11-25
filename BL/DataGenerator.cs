@@ -30,6 +30,11 @@ namespace trackMe.BL
                 ViewGroup.LayoutParams.WrapContent);
 
             Boolean colored = false;
+            // TO DO
+            // חיפוש לפי קו לשמור כל סבב שכבר נכנסתי אליו לפי המשתנה
+            // DatedVehicleJourneyRef
+            // ואז לקרוא את כל התחנות שלו פעם אחת לפי המערך של ה
+            // OnwardCalls
             foreach (MonitoredStopVisit Row in data)
             {
                 TableRow tr = new TableRow(context);
