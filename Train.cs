@@ -28,7 +28,7 @@ namespace trackMe
 
             TextView txtStation = FindViewById<TextView>(Resource.Id.txt_train);
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_train);
-            TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_station);
+            TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_train);
 
             btnSearch.Click += delegate
             {
