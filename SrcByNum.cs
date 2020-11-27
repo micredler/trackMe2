@@ -29,6 +29,15 @@ namespace trackMe
             //fake
             string agencySelected = "3";
 
+            DBHelper dbHelper = new DBHelper();
+            string[] OperatorList = { "אגד", "דן", "אפיקים" }; // dbHelper.GetAllTrainStopsName();
+
+            AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
+            var adapter = new ArrayAdapter<String>(this, Resource.Layout.list_item, OperatorList);
+
+            operatorAutoComplete.Adapter = adapter;
+
+
             btnSearch.Click += delegate
             {
                 GetData(txtLine.Text, agencySelected, mTableLayout);
