@@ -26,23 +26,25 @@ namespace trackMe
             TextView txtLine = FindViewById<TextView>(Resource.Id.txt_line_num);
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_num);
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_num);
+            //fake
+            string agencySelected = "3";
 
             btnSearch.Click += delegate
             {
-                GetData(txtLine.Text, mTableLayout);
+                GetData(txtLine.Text, agencySelected, mTableLayout);
 
             };
 
         }
 
-        public async void GetData(string lineNumFromUser, TableLayout mTableLayout)
+        public async void GetData(string lineNumFromUser, string agencySelected, TableLayout mTableLayout)
         {
             const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=all";
             const string LINE_PARAM = "LineRef=";
             const string CALLS = "StopVisitDetailLevel=calls";
 
-            string routeId = dBHelper.GetRouteIdFromDB(lineNumFromUser);
+            string routeId = dBHelper.GetRouteIdFromDB(lineNumFromUser, agencySelected);
 
             ApiService apiService = new ApiService();
 

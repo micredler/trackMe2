@@ -31,22 +31,12 @@ namespace trackMe.Data
             }
         }
 
-        internal string GetRouteIdFromDB(string lineNumFromUser)
+        internal string GetRouteIdFromDB(string lineNumFromUser, string agencySelected)
         {
             SQLiteConnection connection = dbConnection.CreateConnection();
-            var routeId = connection.Query<Route>($"SELECT * FROM routes WHERE route_short_name = {lineNumFromUser}");
+            List<Route> routeId = connection.Query<Route>($"SELECT * FROM routes WHERE route_short_name = {lineNumFromUser}");
 
-            try
-            {
-                // Now it return the first  Egged route but we need to add suport agency in client
-                return routeId.Where(r => r.route_type == 3).First().route_id.ToString();
-                
-            }
-
-            catch (Exception)
-            {
-                return "מספר הקו לא מופיע במערכת";
-            }
+            return routeId.Where(r => r.route_type == Int32.Parse(agencySelected)).First().route_id.ToString();
         }
 
         public string[] GetAllTrainStopsName()
@@ -55,6 +45,22 @@ namespace trackMe.Data
             List<TrainStop> trainStops = connection.Query<TrainStop>($"SELECT stop_merged FROM train_stops");
 
             return trainStops.Select(s => s.stop_merged).OfType<string>().ToArray();
+        }
+        
+        public string[] GetAllAgency()
+        {
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            List<Agency> agencyNames = connection.Query<Agency>($"SELECT agency_name FROM agency");
+
+            return agencyNames.Select(s => s.agency_name).OfType<string>().ToArray();
+        }
+
+        public int GetTrainStationNumberByName(string trainStationName)
+        {
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            TrainStop trainStops = connection.Query<TrainStop>($"SELECT * FROM train_stops WHERE stop_merged LIKE '%{trainStationName}%'").First();
+
+            return trainStops.stop_code;
         }
     }
 }

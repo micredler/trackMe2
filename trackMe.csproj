@@ -72,6 +72,7 @@
     <Compile Include="BL\WebApiModels.cs" />
     <Compile Include="Data\DBHelper.cs" />
     <Compile Include="Data\DBConnection.cs" />
+    <Compile Include="Data\Agency.cs" />
     <Compile Include="Data\TrainStop.cs" />
     <Compile Include="Data\Route.cs" />
     <Compile Include="Data\Stop.cs" />
