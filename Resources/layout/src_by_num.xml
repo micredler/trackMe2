@@ -47,10 +47,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="זמן הגעה ליעד"
+                    android:text="שעה ביעד"
                     android:layout_marginLeft="5px"
                     android:layout_marginRight="5px"
                     android:textStyle="bold"
+                    android:textAlignment="center"
                     android:id="@+id/textView1" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -59,6 +60,7 @@
                     android:layout_marginLeft="5px"
                     android:layout_marginRight="5px"
                     android:textStyle="bold"
+                    android:textAlignment="center"
                     android:id="@+id/textView4" />
 
                 <TextView
@@ -68,6 +70,7 @@
                     android:layout_marginLeft="5px"
                     android:layout_marginRight="5px"
                     android:textStyle="bold"
+                    android:textAlignment="center"
                     android:id="@+id/textView3" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,6 +78,7 @@
                     android:text="תחנת מוצא"
                     android:id="@+id/textView2"
                     android:textStyle="bold"
+                    android:textAlignment="center"
                     android:layout_marginRight="8px" />
             </TableRow>
              <View
