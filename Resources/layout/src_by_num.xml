@@ -15,10 +15,33 @@
         android:id="@+id/textView1" />
     <Space
         android:layout_width="match_parent"
-        android:layout_height="50.5dp"
+        android:layout_height="25.5dp"
         android:id="@+id/space1"
         android:layout_marginBottom="0.0dp"
         android:layout_marginLeft="0.0dp" />
+    <GridLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="1"
+        android:id="@+id/gridLayout1"
+        android:layout_marginBottom="34.0dp">
+        <AutoCompleteTextView
+            android:layout_column="0"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:id="@+id/autoComplete_operator" />
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:text="בחר חברה"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textView5" />
+
+
+    </GridLayout>
     <EditText
         android:text="400"
         android:inputType="number"
@@ -81,10 +104,10 @@
                     android:textAlignment="center"
                     android:layout_marginRight="8px" />
             </TableRow>
-             <View
-            android:layout_width="match_parent"
-            android:background="@android:color/black"
-            android:layout_height="3dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:background="@android:color/black"
+                android:layout_height="3dp"/>
         </TableLayout>
     </ScrollView>
 </LinearLayout>

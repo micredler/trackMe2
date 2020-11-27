@@ -27,6 +27,15 @@ namespace trackMe
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_num);
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_num);
 
+            DBHelper dbHelper = new DBHelper();
+            string[] OperatorList = { "אגד", "דן", "אפיקים" }; // dbHelper.GetAllTrainStopsName();
+
+            AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
+            var adapter = new ArrayAdapter<String>(this, Resource.Layout.list_item, OperatorList);
+
+            operatorAutoComplete.Adapter = adapter;
+
+
             btnSearch.Click += delegate
             {
                 GetData(txtLine.Text, mTableLayout);
