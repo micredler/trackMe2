@@ -33,10 +33,12 @@ namespace trackMe.Data
 
         internal string GetRouteIdFromDB(string lineNumFromUser, string agencySelected)
         {
-            SQLiteConnection connection = dbConnection.CreateConnection();
-            List<Route> routeId = connection.Query<Route>($"SELECT * FROM routes WHERE route_short_name = {lineNumFromUser}");
+            int agencyNumber = GetAgencyNumberByName(agencySelected);
 
-            return routeId.Where(r => r.route_type == Int32.Parse(agencySelected)).First().route_id.ToString();
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            List<Route> routeId = connection.Query<Route>($"SELECT * FROM routes WHERE route_short_name = {lineNumFromUser} and agency_id = {agencyNumber}");
+
+            return routeId.First().route_id.ToString();
         }
 
         public string[] GetAllTrainStopsName()
@@ -61,6 +63,14 @@ namespace trackMe.Data
             TrainStop trainStops = connection.Query<TrainStop>($"SELECT * FROM train_stops WHERE stop_merged LIKE '%{trainStationName}%'").First();
 
             return trainStops.stop_code;
+        }
+
+        public int GetAgencyNumberByName(string agencyName)
+        {
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            var agency = connection.Query<Agency>($"SELECT * FROM agency WHERE agency_name LIKE '%{agencyName}%'").First();
+
+            return agency.agency_id;
         }
     }
 }
