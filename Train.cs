@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using trackMe.BL;
+using trackMe.Data;
 
 namespace trackMe
 {
@@ -21,7 +18,10 @@ namespace trackMe
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.train);
             // Create your application here
-            AutoCompleteTextView textView = FindViewById<AutoCompleteTextView>(Resource.Id.autocomplete_train);
+            DBHelper dbHelper = new DBHelper();
+            string[] TRAIN_STATION = dbHelper.GetAllTrainStopsName();
+
+        AutoCompleteTextView textView = FindViewById<AutoCompleteTextView>(Resource.Id.autocomplete_train);
             var adapter = new ArrayAdapter<String>(this, Resource.Layout.list_item, TRAIN_STATION);
 
             textView.Adapter = adapter;
@@ -74,7 +74,5 @@ namespace trackMe
             Dialog dialog = alert.Create();
             dialog.Show();
         }
-
-        static string[] TRAIN_STATION = new string[] { "באר שבע", "תל אביב ההגנה", "תל אביב מרכז" };
     }
 }
