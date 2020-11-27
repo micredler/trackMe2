@@ -47,7 +47,7 @@ namespace trackMe.Data
             return trainStops.Select(s => s.stop_merged).OfType<string>().ToArray();
         }
         
-        public string[] GetAllAgency()
+        public string[] GetAllAgencies()
         {
             SQLiteConnection connection = dbConnection.CreateConnection();
             List<Agency> agencyNames = connection.Query<Agency>($"SELECT agency_name FROM agency");
