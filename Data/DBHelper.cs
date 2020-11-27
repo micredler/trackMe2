@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using SQLite;
 
 namespace trackMe.Data
@@ -45,7 +38,7 @@ namespace trackMe.Data
 
             try
             {
-                // Now it return the first  Egged route but we need to add suport agency in c
+                // Now it return the first  Egged route but we need to add suport agency in client
                 return routeId.Where(r => r.route_type == 3).First().route_id.ToString();
                 
             }
@@ -54,6 +47,14 @@ namespace trackMe.Data
             {
                 return "מספר הקו לא מופיע במערכת";
             }
+        }
+
+        public string[] GetAllTrainStopsName()
+        {
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            List<TrainStop> trainStops = connection.Query<TrainStop>($"SELECT stop_merged FROM train_stops");
+
+            return trainStops.Select(s => s.stop_merged).OfType<string>().ToArray();
         }
     }
 }
