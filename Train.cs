@@ -29,6 +29,7 @@ namespace trackMe
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_train);
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_train);
             AutoCompleteTextView srcTrain = FindViewById<AutoCompleteTextView>(Resource.Id.autocomplete_train);
+            ImageButton btnFavorite = FindViewById<ImageButton>(Resource.Id.save_favorite);
 
             // TODO: handle case the user leave the input and doesnt choose
             btnSearch.Click += delegate
@@ -37,19 +38,31 @@ namespace trackMe
 
             };
 
-
-
+            btnFavorite.Click += delegate
+            {
+                Alert("the url is", GetSrcUrl(srcTrain.Text));
+            };
 
         }
-        public async void GetData(string trainStationName, TableLayout mTableLayout)
+
+        public string GetSrcUrl(string trainStationName)
+
+
         {
             const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=";
             const string CALLS = "StopVisitDetailLevel=calls";
             int stationNumber = dbHelper.GetTrainStationNumberByName(trainStationName);
 
+            return STATION_PARAM + stationNumber + AND_SIGN + CALLS;
+        }
+
+        public async void GetData(string trainStationName, TableLayout mTableLayout)
+        {
+           
+
             ApiService apiService = new ApiService();
-            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + stationNumber + AND_SIGN + CALLS);
+            ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(trainStationName));
             if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
                 !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
             {

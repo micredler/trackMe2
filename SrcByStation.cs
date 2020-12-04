@@ -26,6 +26,7 @@ namespace trackMe
             TextView txtStation = FindViewById<TextView>(Resource.Id.txt_staion_num);
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_station);
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_station);
+            ImageButton btnFavorite = FindViewById<ImageButton>(Resource.Id.save_favorite);
 
             btnSearch.Click += delegate
             {
@@ -33,19 +34,32 @@ namespace trackMe
 
             };
 
+            btnFavorite.Click += delegate
+            {
+                Alert("the url is", GetSrcUrl(txtStation.Text));
+            };
+
         }
 
-        public async void GetData(string stationNum, TableLayout mTableLayout)
+        public string GetSrcUrl(string stationNum)
+
+
         {
             const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=";
             const string CALLS = "StopVisitDetailLevel=calls";
+
+            return STATION_PARAM + stationNum + AND_SIGN + CALLS;
+        }
+
+        public async void GetData(string stationNum, TableLayout mTableLayout)
+        {
             ApiService apiService = new ApiService();
-            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + stationNum + AND_SIGN + CALLS);
+            ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(stationNum));
             if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
                 !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
             {
-
+                
                 List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 DataGenerator dataGenerator = new DataGenerator();
                 dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "station");
