@@ -24,7 +24,7 @@ namespace trackMe
 
             DBHelper dBHelper = new DBHelper();
             dBHelper.AddNewFavorite("400 to jeru", @"www.google.com");
-            var url = dBHelper.GetFavoriteByName("400 to jeru");
+            string url = dBHelper.GetFavoriteByName("400 to jeru");
         }
     }
 }
