@@ -23,8 +23,10 @@ namespace trackMe
             // Create your application here
 
             DBHelper dBHelper = new DBHelper();
-            dBHelper.AddNewFavorite("400 to jeru", @"www.google.com");
-            string url = dBHelper.GetFavoriteByName("400 to jeru");
+            //dBHelper.AddNewFavorite("400 to jeru", @"www.google.com");
+
+
+            //string url = dBHelper.GetUrlFavoriteByName("66666") ?? dBHelper.GetUrlFavoriteByName("66666") : 
         }
     }
 }

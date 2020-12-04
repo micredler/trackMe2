@@ -61,8 +61,6 @@ namespace trackMe
 
         public async void GetData(string trainStationName, TableLayout mTableLayout)
         {
-           
-
             ApiService apiService = new ApiService();
             ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(trainStationName));
             if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
@@ -75,19 +73,10 @@ namespace trackMe
             }
             else
             {
-                Alert("הודעת מערכת", "אין נתונים להצגה");
+                Alert.AlertMessage(this, "הודעת מערכת", "אין נתונים להצגה");
             }
             //System.Diagnostics.Debug.WriteLine(j);
         }
-
-        public void Alert(string title, string msg)
-        {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.SetTitle(title);
-            alert.SetMessage(msg);
-
-            Dialog dialog = alert.Create();
-            dialog.Show();
-        }
+        
     }
 }
