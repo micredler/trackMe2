@@ -26,6 +26,7 @@ namespace trackMe
             TextView txtLine = FindViewById<TextView>(Resource.Id.txt_line_num);
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_num);
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_num);
+            ImageButton btnFavorite = FindViewById<ImageButton>(Resource.Id.save_favorite);
 
             string[] OperatorList = dbHelper.GetAllAgencies();
 
@@ -41,9 +42,18 @@ namespace trackMe
 
             };
 
+            btnFavorite.Click += delegate
+            {
+                Alert("the url is", GetSrcUrl(txtLine.Text));
+            };
+
         }
 
-        public async void GetData(string lineNumFromUser, string agencySelected, TableLayout mTableLayout)
+
+
+        public string GetSrcUrl(string lineNumFromUser)
+
+
         {
             const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=all";
@@ -52,9 +62,15 @@ namespace trackMe
 
             string routeId = dbHelper.GetRouteIdFromDB(lineNumFromUser, agencySelected);
 
+            return STATION_PARAM + AND_SIGN + LINE_PARAM + routeId + AND_SIGN + CALLS;
+        }
+
+        public async void GetData(string lineNumFromUser, TableLayout mTableLayout)
+        {
+ 
             ApiService apiService = new ApiService();
 
-            ApiResponse j = await apiService.GetDataFromApi(STATION_PARAM + AND_SIGN + LINE_PARAM + routeId + AND_SIGN + CALLS);
+            ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(lineNumFromUser));
             if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
                 !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
             {
