@@ -4,31 +4,46 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:text="@string/train"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <GridLayout
         android:minWidth="25px"
         android:minHeight="25px"
-        android:id="@+id/textView1" />
-    <Space
         android:layout_width="match_parent"
-        android:layout_height="50.5dp"
-        android:id="@+id/space1"
-        android:layout_marginBottom="0.0dp"
-        android:layout_marginLeft="0.0dp" />
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="1"
+        android:id="@+id/gridLayout2"
+        android:layout_marginBottom="34.0dp">
+        <ImageButton
+            android:src="@drawable/abc_ic_star_black_36dp"
+            android:layout_column="0"
+            android:tooltipText="שמור במועדפים"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/save_favorite" />
+        <TextView
+            android:text="@string/train"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/textView1" />
+    </GridLayout>
+    <TextView
+            android:text="התחל להקליד תחנת רכבת"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/textView1" />
     <AutoCompleteTextView android:id="@+id/autocomplete_train"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"/>
-    <EditText
-        android:text="32902"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_train" />
     <Button
         android:text="חיפוש"
         android:layout_width="match_parent"
