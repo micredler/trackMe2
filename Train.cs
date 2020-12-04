@@ -40,7 +40,9 @@ namespace trackMe
 
             btnFavorite.Click += delegate
             {
-                Alert("the url is", GetSrcUrl(srcTrain.Text));
+                string favoriteName = "תחנת רכבת " + srcTrain.Text;
+                dbHelper.AddNewFavorite(favoriteName, GetSrcUrl(srcTrain.Text));
+                //Alert("the url is", GetSrcUrl(srcTrain.Text));
             };
 
         }

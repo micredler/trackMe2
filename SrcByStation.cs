@@ -12,12 +12,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using trackMe.BL;
+using trackMe.Data;
 
 namespace trackMe
 {
     [Activity(Label = "SrcByStation")]
     public class SrcByStation : Activity
     {
+        readonly DBHelper dbHelper = new DBHelper();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -36,7 +38,9 @@ namespace trackMe
 
             btnFavorite.Click += delegate
             {
-                Alert("the url is", GetSrcUrl(txtStation.Text));
+                string favoriteName = "תחנה " + txtStation.Text;
+                dbHelper.AddNewFavorite(favoriteName, GetSrcUrl(txtStation.Text));
+                //Alert("the url is", GetSrcUrl(txtStation.Text));
             };
 
         }
