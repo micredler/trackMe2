@@ -72,5 +72,20 @@ namespace trackMe.Data
 
             return agency.agency_id;
         }
+        public void AddNewFavorite(string name, string url)
+        {
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            var response = connection.Query<FavoriteData>($"INSERT INTO favorites (name, url) VALUES('{name}', '{url}')");
+            response.ToString();
+            Console.WriteLine(response);
+        }
+
+        public string GetFavoriteByName(string name)
+        {
+            SQLiteConnection connection = dbConnection.CreateConnection();
+            var favorite = connection.Query<FavoriteData>($"SELECT * FROM favorites WHERE name LIKE '%{name}%'").First();
+
+            return favorite.url;
+        }
     }
 }

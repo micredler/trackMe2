@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using trackMe.Data;
 
 namespace trackMe
 {
@@ -20,6 +21,10 @@ namespace trackMe
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.favorite);
             // Create your application here
+
+            DBHelper dBHelper = new DBHelper();
+            dBHelper.AddNewFavorite("400 to jeru", @"www.google.com");
+            var url = dBHelper.GetFavoriteByName("400 to jeru");
         }
     }
 }
