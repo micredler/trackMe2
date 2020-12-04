@@ -37,7 +37,7 @@ namespace trackMe.Data
 
             SQLiteConnection connection = dbConnection.CreateConnection();
             List<Route> routeId = connection.Query<Route>($"SELECT * FROM routes WHERE route_short_name = {lineNumFromUser} and agency_id = {agencyNumber}");
-
+            
             return routeId.First().route_id.ToString();
         }
 

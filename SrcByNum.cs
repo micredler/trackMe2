@@ -38,20 +38,20 @@ namespace trackMe
 
             btnSearch.Click += delegate
             {
-                GetData(txtLine.Text, operatorAutoComplete.Text, mTableLayout);
+                GetData(txtLine.Text, mTableLayout, operatorAutoComplete.Text);
 
             };
 
             btnFavorite.Click += delegate
             {
-                Alert("the url is", GetSrcUrl(txtLine.Text));
+                Alert("the url is", GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
             };
 
         }
 
 
 
-        public string GetSrcUrl(string lineNumFromUser)
+        public string GetSrcUrl(string lineNumFromUser, string agencySelected)
 
 
         {
@@ -65,12 +65,12 @@ namespace trackMe
             return STATION_PARAM + AND_SIGN + LINE_PARAM + routeId + AND_SIGN + CALLS;
         }
 
-        public async void GetData(string lineNumFromUser, TableLayout mTableLayout)
+        public async void GetData(string lineNumFromUser, TableLayout mTableLayout, string agencySelected)
         {
  
             ApiService apiService = new ApiService();
 
-            ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(lineNumFromUser));
+            ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(lineNumFromUser, agencySelected));
             if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
                 !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
             {
