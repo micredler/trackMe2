@@ -39,15 +39,13 @@ namespace trackMe
             btnFavorite.Click += delegate
             {
                 string favoriteName = "תחנה " + txtStation.Text;
-                dbHelper.AddNewFavorite(favoriteName, GetSrcUrl(txtStation.Text));
+                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtStation.Text));
                 //Alert("the url is", GetSrcUrl(txtStation.Text));
             };
 
         }
 
         public string GetSrcUrl(string stationNum)
-
-
         {
             const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=";
@@ -59,19 +57,18 @@ namespace trackMe
         public async void GetData(string stationNum, TableLayout mTableLayout)
         {
             ApiService apiService = new ApiService();
-            ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(stationNum));
-            if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
-                !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
+            ApiResponse apiResponse = await apiService.GetDataFromApi(GetSrcUrl(stationNum));
+            try
             {
                 
-                List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
+                List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 DataGenerator dataGenerator = new DataGenerator();
                 dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "station");
                 // setTableData(visits, mTableLayout);
             }
-            else
+            catch
             {
-                Alert.AlertMessage(this, "הודעת מערכת", "אין נתונים להצגה");
+                Alert.AlertMessage(this, "הודעת מערכת", "מספר התחנה לא מופיע במערכת");
             }
             //System.Diagnostics.Debug.WriteLine(j);
         }

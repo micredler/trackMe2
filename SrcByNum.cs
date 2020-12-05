@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using trackMe.BL;
 using trackMe.Data;
@@ -45,7 +40,7 @@ namespace trackMe
             btnFavorite.Click += delegate
             {
                 string favoriteName = "חברה " + operatorAutoComplete.Text + "קו " + txtLine.Text;
-                dbHelper.AddNewFavorite(favoriteName, GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
+                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
                 //Alert("the url is", GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
             };
 
@@ -54,8 +49,6 @@ namespace trackMe
 
 
         public string GetSrcUrl(string lineNumFromUser, string agencySelected)
-
-
         {
             const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=all";
@@ -64,27 +57,29 @@ namespace trackMe
 
             string routeId = dbHelper.GetRouteIdFromDB(lineNumFromUser, agencySelected);
 
-            return STATION_PARAM + AND_SIGN + LINE_PARAM + routeId + AND_SIGN + CALLS;
+            if (String.IsNullOrEmpty(routeId))
+            {
+                Alert.AlertMessage(this, "הודעת מערכת", "מספר הקו לא מופיע במערכת");
+                return null;
+            }
+
+            else
+            {
+                return STATION_PARAM + AND_SIGN + LINE_PARAM + routeId + AND_SIGN + CALLS;
+            }
         }
 
         public async void GetData(string lineNumFromUser, TableLayout mTableLayout, string agencySelected)
         {
- 
             ApiService apiService = new ApiService();
+            ApiResponse apiResponse = await apiService.GetDataFromApi(GetSrcUrl(lineNumFromUser, agencySelected));
 
-            ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(lineNumFromUser, agencySelected));
-            if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
-                !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
+            if (apiResponse.Siri != null)
             {
-
-                List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
+                List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 DataGenerator dataGenerator = new DataGenerator();
                 dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "line");
                 //setTableData(visits, mTableLayout);
-            }
-            else
-            {
-                Alert.AlertMessage(this, "הודעת מערכת", "אין נתונים להצגה");
             }
             //System.Diagnostics.Debug.WriteLine(j);
         }

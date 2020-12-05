@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Android.App;
 using SQLite;
+using trackMe.BL;
 
 namespace trackMe.Data
 {
@@ -111,7 +112,7 @@ namespace trackMe.Data
             }
 
         }
-        public void AddNewFavorite(string name, string url)
+        public void AddNewFavorite(Activity activity, string name, string url)
         {
             try
             {
@@ -121,6 +122,7 @@ namespace trackMe.Data
 
             catch (Exception)
             {
+                Alert.AlertMessage(activity, "הודעת מערכת", "המועדף לא נוסף במערכת");
                 return;
             }
         }
