@@ -67,6 +67,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\Alert.cs" />
     <Compile Include="BL\ApiService.cs" />
     <Compile Include="BL\DataGenerator.cs" />
     <Compile Include="BL\WebApiModels.cs" />

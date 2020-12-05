@@ -41,53 +41,50 @@ namespace trackMe
             btnFavorite.Click += delegate
             {
                 string favoriteName = "תחנת רכבת " + srcTrain.Text;
-                dbHelper.AddNewFavorite(favoriteName, GetSrcUrl(srcTrain.Text));
+                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(srcTrain.Text));
                 //Alert("the url is", GetSrcUrl(srcTrain.Text));
             };
 
         }
 
         public string GetSrcUrl(string trainStationName)
-
-
         {
             const string AND_SIGN = "%26";
             const string STATION_PARAM = "MonitoringRef=";
             const string CALLS = "StopVisitDetailLevel=calls";
             int stationNumber = dbHelper.GetTrainStationNumberByName(trainStationName);
 
-            return STATION_PARAM + stationNumber + AND_SIGN + CALLS;
+            if (stationNumber == 0)
+            {
+                Alert.AlertMessage(this, "הודעת מערכת", "תחנת הרכבת לא מופיעה במערכת");
+                return null;
+            }
+
+            else
+            {
+
+                return STATION_PARAM + stationNumber + AND_SIGN + CALLS;
+            }
         }
 
         public async void GetData(string trainStationName, TableLayout mTableLayout)
         {
-           
-
             ApiService apiService = new ApiService();
-            ApiResponse j = await apiService.GetDataFromApi(GetSrcUrl(trainStationName));
-            if (!(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit is null) &&
-                !(j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0))
+            ApiResponse apiResponse = await apiService.GetDataFromApi(GetSrcUrl(trainStationName));
+
+            if (apiResponse.Siri != null)
             {
-                List<MonitoredStopVisit> visits = j.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
+                List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 DataGenerator dataGenerator = new DataGenerator();
                 dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "station");
                 // setTableData(visits, mTableLayout);
             }
-            else
-            {
-                Alert("הודעת מערכת", "אין נתונים להצגה");
+
+            if (apiResponse?.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0)
+            { 
+                Alert.AlertMessage(this, "הודעת מערכת", "אין רכבות בתחנה ב30 הדקות הקרובות");
             }
             //System.Diagnostics.Debug.WriteLine(j);
-        }
-
-        public void Alert(string title, string msg)
-        {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.SetTitle(title);
-            alert.SetMessage(msg);
-
-            Dialog dialog = alert.Create();
-            dialog.Show();
         }
     }
 }
