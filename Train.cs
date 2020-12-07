@@ -72,7 +72,12 @@ namespace trackMe
             ApiService apiService = new ApiService();
             ApiResponse apiResponse = await apiService.GetDataFromApi(GetSrcUrl(trainStationName));
 
-            if (apiResponse.Siri != null)
+            if (apiResponse?.Siri?.ServiceDelivery?.StopMonitoringDelivery?[0]?.MonitoredStopVisit?.Count == 0)
+            { 
+                Alert.AlertMessage(this, "הודעת מערכת", "אין רכבות בתחנה ב30 הדקות הקרובות");
+            }
+
+            else if (apiResponse.Siri != null)
             {
                 List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 DataGenerator dataGenerator = new DataGenerator();
@@ -80,10 +85,6 @@ namespace trackMe
                 // setTableData(visits, mTableLayout);
             }
 
-            if (apiResponse?.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.Count == 0)
-            { 
-                Alert.AlertMessage(this, "הודעת מערכת", "אין רכבות בתחנה ב30 הדקות הקרובות");
-            }
             //System.Diagnostics.Debug.WriteLine(j);
         }
     }
