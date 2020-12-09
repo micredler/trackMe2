@@ -39,7 +39,7 @@ namespace trackMe
 
             btnFavorite.Click += delegate
             {
-                string favoriteName = "חברה " + operatorAutoComplete.Text + "קו " + txtLine.Text;
+                string favoriteName = "חברה " + operatorAutoComplete.Text + " קו " + txtLine.Text;
                 dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
                 //Alert("the url is", GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
             };

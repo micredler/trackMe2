@@ -126,6 +126,20 @@ namespace trackMe.Data
                 return;
             }
         }
+        public void DeleteFavorite(Activity activity, string name)
+        {
+            try
+            {
+                SQLiteConnection connection = dbConnection.CreateConnection();
+                connection.Query<FavoriteData>($"Delete from favorites where name = '{name}'");
+            }
+
+            catch (Exception)
+            {
+                Alert.AlertMessage(activity, "הודעת מערכת", "המועדף לא נוסף במערכת");
+                return;
+            }
+        }
 
         public string GetUrlFavoriteByName(string name)
         {
@@ -134,6 +148,22 @@ namespace trackMe.Data
                 SQLiteConnection connection = dbConnection.CreateConnection();
                 FavoriteData favorite = connection.Query<FavoriteData>($"SELECT * FROM favorites WHERE name LIKE '%{name}%'").First();
                 return favorite.url;
+            }
+
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
+        public List<FavoriteData> GetFavorites()
+        {
+            try
+            {
+                SQLiteConnection connection = dbConnection.CreateConnection();
+                List<FavoriteData> favorites = connection.Query<FavoriteData>($"SELECT * FROM favorites").ToList<FavoriteData>();
+                return favorites;
             }
 
             catch (Exception)

@@ -70,6 +70,7 @@
     <Compile Include="BL\Alert.cs" />
     <Compile Include="BL\ApiService.cs" />
     <Compile Include="BL\DataGenerator.cs" />
+    <Compile Include="BL\Models.cs" />
     <Compile Include="BL\WebApiModels.cs" />
     <Compile Include="Data\DBHelper.cs" />
     <Compile Include="Data\DBConnection.cs" />

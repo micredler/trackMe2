@@ -42,7 +42,12 @@ namespace trackMe
                 dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtStation.Text));
                 //Alert("the url is", GetSrcUrl(txtStation.Text));
             };
-
+            string favoriteUrl = "";
+            favoriteUrl = Intent.GetStringExtra("Url");
+            if (favoriteUrl != "")
+            {
+                GetData("", mTableLayout, favoriteUrl);
+            }
         }
 
         public string GetSrcUrl(string stationNum)
@@ -54,10 +59,12 @@ namespace trackMe
             return STATION_PARAM + stationNum + AND_SIGN + CALLS;
         }
 
-        public async void GetData(string stationNum, TableLayout mTableLayout)
+        public async void GetData(string stationNum, TableLayout mTableLayout, string favoriteUrl = "")
         {
             ApiService apiService = new ApiService();
-            ApiResponse apiResponse = await apiService.GetDataFromApi(GetSrcUrl(stationNum));
+
+            string urlToSend = favoriteUrl != "" ? favoriteUrl : GetSrcUrl(stationNum);
+            ApiResponse apiResponse = await apiService.GetDataFromApi(urlToSend);
             try
             {
                 

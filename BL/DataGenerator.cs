@@ -18,6 +18,55 @@ namespace trackMe.BL
     class DataGenerator
     {
         DBHelper dbHelper = new DBHelper();
+
+        public List<FavoriteElementId> setFavorites(List<FavoriteData> favorites, Context context, Resources resources, Activity currentObj
+            , TableLayout mTableLayout)
+        {
+            while (mTableLayout.ChildCount > 0)
+            {
+                mTableLayout.RemoveViewAt(0);
+            }
+
+            TableRow.LayoutParams tableRowLayoutparams = new TableRow.LayoutParams(
+            ViewGroup.LayoutParams.WrapContent,
+            ViewGroup.LayoutParams.WrapContent);
+
+            List<FavoriteElementId> response = new List<FavoriteElementId>();
+
+            Boolean colored = false;
+            foreach (FavoriteData Row in favorites)
+            {
+
+                TableRow tr = new TableRow(context);
+                if (colored) tr.SetBackgroundColor(resources.GetColor(Resource.Color.eventRowResult));
+                colored = !colored;
+                tr.LayoutParameters = tableRowLayoutparams;
+
+                TextView tv1 = new TextView(context);
+                tv1.Text = Row.name;
+                tv1.TextAlignment = TextAlignment.ViewEnd;
+
+                tv1.SetPadding(0, 0, 13, 0);
+                tv1.SetMinimumWidth(320);
+                tv1.SetTextSize(Android.Util.ComplexUnitType.Dip, 22);
+
+                ImageButton deleteBtn = new ImageButton(context);
+
+                deleteBtn.SetImageResource(Android.Resource.Drawable.IcMenuDelete);
+                deleteBtn.SetMaxWidth(30);
+                deleteBtn.SetBackgroundColor(Android.Graphics.Color.Transparent);
+
+                //deleteBtn.SetMaxHeight(5);
+                deleteBtn.TextAlignment = TextAlignment.ViewEnd;
+
+                tr.AddView(tv1);
+                tr.AddView(deleteBtn);
+                mTableLayout.AddView(tr);
+                response.Add(new FavoriteElementId(deleteBtn, tv1, Row.name));
+            }
+            return response;
+        }
+
         public void SetTableData(List<MonitoredStopVisit> data, TableLayout mTableLayout, Context context, Resources resources
             , string searchType)
         {
@@ -28,8 +77,10 @@ namespace trackMe.BL
             TableRow.LayoutParams tableRowLayoutparams = new TableRow.LayoutParams(
                 ViewGroup.LayoutParams.WrapContent,
                 ViewGroup.LayoutParams.WrapContent);
-            
+
             Boolean colored = false;
+
+
             // TO DO
             // חיפוש לפי קו לשמור כל סבב שכבר נכנסתי אליו לפי המשתנה
             // DatedVehicleJourneyRef
@@ -38,10 +89,10 @@ namespace trackMe.BL
             if (searchType == "line")
             {
                 List<string> idLoop = new List<string>();
-               
+
                 foreach (MonitoredStopVisit Row in data.OrderBy(s => s.MonitoredVehicleJourney.FramedVehicleJourneyRef.DatedVehicleJourneyRef))
                 {
-                    
+
                     string crntIdLoop = Row.MonitoredVehicleJourney.FramedVehicleJourneyRef.DatedVehicleJourneyRef;
                     if (crntIdLoop == "0" || idLoop.FindIndex(x => x == crntIdLoop) >= 0)
                     {
@@ -103,7 +154,7 @@ namespace trackMe.BL
                                 mTableLayout.AddView(tr);
                             }
                         }
-        
+
                     }
 
                 }
