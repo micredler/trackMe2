@@ -159,12 +159,14 @@ namespace trackMe.BL
                                 //firstStationName = firstStationName.Replace("שדרות", "");
                                 tv1.Text = firstStationName;
                                 tv1.TextAlignment = TextAlignment.ViewEnd;
+                                tv1.SetMaxWidth(400);
                                 tv1.SetPadding(0, 0, 13, 0);
                                 TextView tv2 = new TextView(context);
                                 tv2.Text = DateTime.Parse(call.ExpectedArrivalTime.ToShortTimeString()).ToString("HH:mm", CultureInfo.CurrentCulture);
                                 tv2.TextAlignment = TextAlignment.Center;
 
                                 TextView tv3 = new TextView(context);
+                                tv3.SetMaxWidth(400);
                                 string stationName = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
                                 stationName = GetShortDest(stationName);
                                 //stationName = stationName.Replace("/הורדה", "");
