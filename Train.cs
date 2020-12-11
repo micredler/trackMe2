@@ -30,10 +30,13 @@ namespace trackMe
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_train);
             AutoCompleteTextView srcTrain = FindViewById<AutoCompleteTextView>(Resource.Id.autocomplete_train);
             ImageButton btnFavorite = FindViewById<ImageButton>(Resource.Id.save_favorite);
+            TextView labelFavorite = FindViewById<TextView>(Resource.Id.labelFavorite);
 
             // TODO: handle case the user leave the input and doesnt choose
             btnSearch.Click += delegate
             {
+                labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
+                labelFavorite.Text = "";
                 GetData(srcTrain.Text, mTableLayout);
 
             };
@@ -41,9 +44,20 @@ namespace trackMe
             btnFavorite.Click += delegate
             {
                 string favoriteName = "תחנת רכבת " + srcTrain.Text;
-                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(srcTrain.Text));
+                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(srcTrain.Text), (int) SEARCH_TYPE.train);
+                Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
                 //Alert("the url is", GetSrcUrl(srcTrain.Text));
             };
+
+            string favoriteUrl = "";
+            favoriteUrl = Intent.GetStringExtra("url");
+            if (favoriteUrl != null && favoriteUrl != "")
+            {
+                labelFavorite.Visibility = Android.Views.ViewStates.Visible;
+                string searchName = Intent.GetStringExtra("searchName");
+                labelFavorite.Text = searchName;
+                GetData("", mTableLayout, favoriteUrl);
+            }
 
         }
 
@@ -67,10 +81,11 @@ namespace trackMe
             }
         }
 
-        public async void GetData(string trainStationName, TableLayout mTableLayout)
+        public async void GetData(string trainStationName, TableLayout mTableLayout, string favoriteUrl = "")
         {
             ApiService apiService = new ApiService();
-            ApiResponse apiResponse = await apiService.GetDataFromApi(GetSrcUrl(trainStationName));
+            string urlToSend = favoriteUrl != "" ? favoriteUrl : GetSrcUrl(trainStationName);
+            ApiResponse apiResponse = await apiService.GetDataFromApi(urlToSend);
 
             if (apiResponse?.Siri?.ServiceDelivery?.StopMonitoringDelivery?[0]?.MonitoredStopVisit?.Count == 0)
             { 

@@ -56,9 +56,24 @@ namespace trackMe
 
                 Row.Txt.Click += delegate
                 {
-                    Intent activity = new Intent(this, typeof(SrcByStation));
-
-                    activity.PutExtra("Url", dBHelper.GetUrlFavoriteByName(Row.Name));
+                    Intent activity;
+                    switch (Row.SearchType)
+                    {
+                        case (int) SEARCH_TYPE.line:
+                            activity = new Intent(this, typeof(SrcByNum));
+                            break;
+                        case (int)SEARCH_TYPE.train:
+                            activity = new Intent(this, typeof(Train));
+                            break;
+                        case (int)SEARCH_TYPE.station:
+                            activity = new Intent(this, typeof(SrcByStation));
+                            break;
+                        default:
+                            return;
+                    }
+                    
+                    activity.PutExtra("url", dBHelper.GetUrlFavoriteByName(Row.Name));
+                    activity.PutExtra("searchName", Row.Name);
                     StartActivity(activity);
 
                 };

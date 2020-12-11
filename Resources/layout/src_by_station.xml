@@ -6,15 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/linearLayout2">
-     <GridLayout
+    <GridLayout
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45.5dp"
         android:columnCount="2"
         android:rowCount="1"
-        android:id="@+id/gridLayout2"
-        android:layout_marginBottom="34.0dp">
+        android:id="@+id/gridLayout2">
         <ImageButton
             android:src="@drawable/abc_ic_star_black_36dp"
             android:layout_column="0"
@@ -33,6 +32,16 @@
             android:id="@+id/textView1" />
     </GridLayout>
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25.0dp"
+        android:layout_margin="5dp"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:background="@color/material_grey_300"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:id="@+id/labelFavorite" />
+    <TextView
         android:text="הכנס מספר תחנה"
         android:textAlignment="viewEnd"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -43,7 +52,6 @@
         android:minHeight="25px"
         android:id="@+id/textView1" />
     <EditText
-        android:text="32902"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

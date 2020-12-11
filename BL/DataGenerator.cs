@@ -18,7 +18,41 @@ namespace trackMe.BL
     class DataGenerator
     {
         DBHelper dbHelper = new DBHelper();
+        private string GetShortDest(string dest)
+        {
+            string shortDest = "";
+            string[] destParts = dest.Replace("/הורדה", "").Split("/");
+            int relevantIndex = destParts.GetUpperBound(0);
+            Boolean secondPart = false;
+            foreach (string part in destParts)
+            {
+                if (secondPart) { shortDest += "/"; }
+                string[] destWords = part.Split(" ");
+                if (destWords.Length > 1)
+                {
+                    shortDest += destWords[destWords.GetUpperBound(0) - 1];
+                    shortDest += " " + destWords[destWords.GetUpperBound(0)];
+                }
+                else
+                {
+                    shortDest += part;
+                }
+                secondPart = true;
+            }
+            //string[] destWords = destParts[relevantIndex].Split(" ");
 
+            //shortDest = relevantIndex > 0 ? destParts[0] + "/" : "";
+            //if (destWords.Length > 1)
+            //{
+            //    shortDest += destWords[destWords.GetUpperBound(0) - 1];
+            //    shortDest += " " + destWords[destWords.GetUpperBound(0)];
+            //} else
+            //{
+            //    shortDest = string.Join("/", destParts);
+            //}
+
+            return shortDest;
+        }
         public List<FavoriteElementId> setFavorites(List<FavoriteData> favorites, Context context, Resources resources, Activity currentObj
             , TableLayout mTableLayout)
         {
@@ -33,7 +67,7 @@ namespace trackMe.BL
 
             List<FavoriteElementId> response = new List<FavoriteElementId>();
 
-            Boolean colored = false;
+            Boolean colored = true;
             foreach (FavoriteData Row in favorites)
             {
 
@@ -62,7 +96,7 @@ namespace trackMe.BL
                 tr.AddView(tv1);
                 tr.AddView(deleteBtn);
                 mTableLayout.AddView(tr);
-                response.Add(new FavoriteElementId(deleteBtn, tv1, Row.name));
+                response.Add(new FavoriteElementId(deleteBtn, tv1, Row.name, Row.searchType));
             }
             return response;
         }
@@ -120,7 +154,9 @@ namespace trackMe.BL
 
                                 TextView tv1 = new TextView(context);
                                 string firstStationName = dbHelper.ReadStationName(call.StopPointRef);
-                                firstStationName = firstStationName.Replace("/הורדה", "");
+                                firstStationName = GetShortDest(firstStationName);
+                                //firstStationName = firstStationName.Replace("/הורדה", "");
+                                //firstStationName = firstStationName.Replace("שדרות", "");
                                 tv1.Text = firstStationName;
                                 tv1.TextAlignment = TextAlignment.ViewEnd;
                                 tv1.SetPadding(0, 0, 13, 0);
@@ -130,7 +166,9 @@ namespace trackMe.BL
 
                                 TextView tv3 = new TextView(context);
                                 string stationName = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
-                                stationName = stationName.Replace("/הורדה", "");
+                                stationName = GetShortDest(stationName);
+                                //stationName = stationName.Replace("/הורדה", "");
+                                //stationName = stationName.Replace("שדרות", "");
                                 tv3.Text = stationName;
                                 tv3.TextAlignment = TextAlignment.Center;
 
@@ -187,7 +225,8 @@ namespace trackMe.BL
 
                     TextView tv3 = new TextView(context);
                     string stationName = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
-                    stationName = stationName.Replace("/הורדה", "");
+                    stationName = GetShortDest(stationName);
+                    // stationName = stationName.Replace("/הורדה", "");
                     tv3.Text = stationName;
                     tv3.TextAlignment = TextAlignment.Center;
 

@@ -22,6 +22,7 @@ namespace trackMe
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_num);
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_num);
             ImageButton btnFavorite = FindViewById<ImageButton>(Resource.Id.save_favorite);
+            TextView labelFavorite = FindViewById<TextView>(Resource.Id.labelFavorite);
 
             string[] OperatorList = dbHelper.GetAllAgencies();
 
@@ -33,6 +34,8 @@ namespace trackMe
 
             btnSearch.Click += delegate
             {
+                labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
+                labelFavorite.Text = "";
                 GetData(txtLine.Text, mTableLayout, operatorAutoComplete.Text);
 
             };
@@ -40,9 +43,20 @@ namespace trackMe
             btnFavorite.Click += delegate
             {
                 string favoriteName = "חברה " + operatorAutoComplete.Text + " קו " + txtLine.Text;
-                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
+                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtLine.Text, operatorAutoComplete.Text), (int)SEARCH_TYPE.line);
+                Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
                 //Alert("the url is", GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
             };
+
+            string favoriteUrl = "";
+            favoriteUrl = Intent.GetStringExtra("url");
+            if (favoriteUrl != null && favoriteUrl != "")
+            {
+                labelFavorite.Visibility = Android.Views.ViewStates.Visible;
+                string searchName = Intent.GetStringExtra("searchName");
+                labelFavorite.Text = searchName;
+                GetData("", mTableLayout, "", favoriteUrl);
+            }
 
         }
 
@@ -69,10 +83,11 @@ namespace trackMe
             }
         }
 
-        public async void GetData(string lineNumFromUser, TableLayout mTableLayout, string agencySelected)
+        public async void GetData(string lineNumFromUser, TableLayout mTableLayout, string agencySelected, string favoriteUrl = "")
         {
             ApiService apiService = new ApiService();
-            ApiResponse apiResponse = await apiService.GetDataFromApi(GetSrcUrl(lineNumFromUser, agencySelected));
+            string urlToSend = favoriteUrl != "" ? favoriteUrl : GetSrcUrl(lineNumFromUser, agencySelected);
+            ApiResponse apiResponse = await apiService.GetDataFromApi(urlToSend);
 
             if (apiResponse.Siri != null)
             {

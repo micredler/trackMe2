@@ -29,9 +29,12 @@ namespace trackMe
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_station);
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_station);
             ImageButton btnFavorite = FindViewById<ImageButton>(Resource.Id.save_favorite);
+            TextView labelFavorite = FindViewById<TextView>(Resource.Id.labelFavorite);
 
             btnSearch.Click += delegate
             {
+                labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
+                labelFavorite.Text = "";
                 GetData(txtStation.Text, mTableLayout);
 
             };
@@ -39,13 +42,17 @@ namespace trackMe
             btnFavorite.Click += delegate
             {
                 string favoriteName = "תחנה " + txtStation.Text;
-                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtStation.Text));
+                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtStation.Text), (int) SEARCH_TYPE.station);
+                Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
                 //Alert("the url is", GetSrcUrl(txtStation.Text));
             };
             string favoriteUrl = "";
-            favoriteUrl = Intent.GetStringExtra("Url");
-            if (favoriteUrl != "")
+            favoriteUrl = Intent.GetStringExtra("url");
+            if (favoriteUrl != null && favoriteUrl != "")
             {
+                string searchName = Intent.GetStringExtra("searchName");
+                labelFavorite.Visibility = Android.Views.ViewStates.Visible;
+                labelFavorite.Text = searchName;
                 GetData("", mTableLayout, favoriteUrl);
             }
         }

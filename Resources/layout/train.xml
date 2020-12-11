@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:columnCount="2"
         android:rowCount="1"
-        android:id="@+id/gridLayout2"
-        android:layout_marginBottom="34.0dp">
+        android:id="@+id/gridLayout2">
         <ImageButton
             android:src="@drawable/abc_ic_star_black_36dp"
             android:layout_column="0"
@@ -30,6 +29,16 @@
             android:minHeight="25px"
             android:id="@+id/textView1" />
     </GridLayout>
+     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25.0dp"
+        android:layout_margin="5dp"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:background="@color/material_grey_300"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:id="@+id/labelFavorite" />
     <TextView
             android:text="התחל להקליד תחנת רכבת"
             android:textAlignment="viewEnd"

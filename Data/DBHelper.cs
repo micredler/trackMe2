@@ -112,12 +112,12 @@ namespace trackMe.Data
             }
 
         }
-        public void AddNewFavorite(Activity activity, string name, string url)
+        public void AddNewFavorite(Activity activity, string name, string url, int searchType)
         {
             try
             {
                 SQLiteConnection connection = dbConnection.CreateConnection();
-                connection.Query<FavoriteData>($"INSERT INTO favorites (name, url) VALUES('{name}', '{url}')");
+                connection.Query<FavoriteData>($"INSERT INTO favorites (name, url, searchType) VALUES('{name}', '{url}', '{searchType}')");
             }
 
             catch (Exception)
