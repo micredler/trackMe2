@@ -31,6 +31,8 @@ namespace trackMe
 
             operatorAutoComplete.Adapter = adapter;
 
+            List<string> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text).Select(direction => direction.destination).ToList();
+
 
             btnSearch.Click += delegate
             {
@@ -59,7 +61,6 @@ namespace trackMe
             }
 
         }
-
 
 
         public string GetSrcUrl(string lineNumFromUser, string agencySelected)
@@ -102,6 +103,10 @@ namespace trackMe
                 //setTableData(visits, mTableLayout);
             }
             //System.Diagnostics.Debug.WriteLine(j);
+        }
+        private List<Route> GetDirections(string lineNumber, string operatorName)
+        {
+            return dbHelper.GetDirections(lineNumber, operatorName);
         }
 
     }

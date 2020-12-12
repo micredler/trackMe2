@@ -157,6 +157,7 @@ namespace trackMe.Data
 
         }
 
+
         public List<FavoriteData> GetFavorites()
         {
             try
@@ -171,6 +172,22 @@ namespace trackMe.Data
                 return null;
             }
 
+        }
+        public List<Route> GetDirections(string lineNumber, string operatorName)
+        {
+            try
+            {
+                SQLiteConnection connection = dbConnection.CreateConnection();
+                var response = connection.Query<Route>
+                    ($"SELECT route_id, destination FROM routes WHERE route_short_name like '{lineNumber}' and agency_id like '{operatorName}' GROUP BY destination").ToList();
+
+                return response;
+            }
+
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
