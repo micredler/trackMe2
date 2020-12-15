@@ -78,6 +78,16 @@
         android:id="@+id/txt_line_num"
         android:layout_marginBottom="0.0dp"
         android:layout_marginTop="0.0dp" />
+    <TextView  
+   android:layout_width="fill_parent"  
+   android:layout_height="wrap_content"  
+   android:layout_marginTop="10dip"  
+   android:text="בחר כיוון נסיעה" />  
+<Spinner  
+   android:id="@+id/spinner"  
+   android:layout_width="fill_parent"  
+   android:layout_height="wrap_content"  
+   android:prompt="@drawable/abc_btn_default_mtrl_shape" /> 
     <Button
         android:text="חיפוש"
         android:layout_width="match_parent"

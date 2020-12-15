@@ -31,18 +31,26 @@ namespace trackMe
 
             operatorAutoComplete.Adapter = adapter;
 
-            List<Route> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
-
-            List<string> optionalDirections = directions.Select(direction => direction.destination).ToList();
+            // List<Route> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
+         
+            // List<string> optionalDirections = directions.Select(direction => direction.destination).ToList();
 
             // here you'll use the direction
             // and choose string from optionalDirections
-            var fakeDirectionThatChoosen = "קו לתל אביב";
+            // var fakeDirectionThatChoosen = "קו לתל אביב";
 
-            int routeIdOfDirectionChoosen = directions.First(d => d.destination.Equals(fakeDirectionThatChoosen)).route_id;
+            // int routeIdOfDirectionChoosen = 5; // directions.First(d => d.destination.Equals(fakeDirectionThatChoosen)).route_id;
+            operatorAutoComplete.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(OperatorSelected);
+            txtLine.AfterTextChanged += new EventHandler<Android.Text.AfterTextChangedEventArgs>(LineChange);
+            Spinner spinner = FindViewById<Spinner>(Resource.Id.spinner);
+
+
+
 
             btnSearch.Click += delegate
             {
+                List<Route> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
+                int routeIdOfDirectionChoosen = directions.First(d => d.destination.Equals(spinner.SelectedItem.ToString())).route_id;
                 labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
                 labelFavorite.Text = "";
                 GetData(txtLine.Text, mTableLayout, operatorAutoComplete.Text, routeIdOfDirectionChoosen);
@@ -50,6 +58,8 @@ namespace trackMe
 
             btnFavorite.Click += delegate
             {
+                List<Route> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
+                int routeIdOfDirectionChoosen = directions.First(d => d.destination.Equals(spinner.SelectedItem.ToString())).route_id;
                 string favoriteName = "חברה " + operatorAutoComplete.Text + " קו " + txtLine.Text;
                 dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(routeIdOfDirectionChoosen), (int)SEARCH_TYPE.line);
                 Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
@@ -63,8 +73,45 @@ namespace trackMe
                 labelFavorite.Visibility = Android.Views.ViewStates.Visible;
                 string searchName = Intent.GetStringExtra("searchName");
                 labelFavorite.Text = searchName;
-                GetData("", mTableLayout, "", routeIdOfDirectionChoosen, favoriteUrl);
+                GetData("", mTableLayout, "", 0, favoriteUrl);
             }
+        }
+
+        private void OperatorSelected(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            AutoCompleteTextView operatorAutoComplete = (AutoCompleteTextView)sender;
+            TextView txtLine = FindViewById<TextView>(Resource.Id.txt_line_num);
+            string line = txtLine.Text;
+            if (operatorAutoComplete.Text != "" && line != "")
+            {
+                SetDataForSpinner(operatorAutoComplete.Text, line);
+            }
+            // Alert.AlertMessage(this, "test", operatorAutoComplete.Text);
+        }
+
+        private void LineChange(object sender, Android.Text.AfterTextChangedEventArgs e)
+        {
+            string newText = e.ToString();
+            Alert.AlertMessage(this, "test", newText);
+        }
+
+        private void SetDataForSpinner(string operatorText, string line)
+        {
+            List<Route> directions = GetDirections(line, operatorText);
+            List<string> optionalDirections = directions.Select(direction => direction.destination).ToList();
+            Spinner spinner = FindViewById<Spinner>(Resource.Id.spinner);
+            spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
+            var adapterForDirection = new ArrayAdapter<String>(this, Resource.Layout.list_item, optionalDirections);
+            // var adapterForDirection = ArrayAdapter.CreateFromResource(this, Resource.Array.car_array, Android.Resource.Layout.SimpleSpinnerItem);
+            adapterForDirection.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            spinner.Adapter = adapterForDirection;
+        }
+
+        private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            Spinner spinner = (Spinner)sender;
+            string toast = string.Format("Selected car is {0}", spinner.GetItemAtPosition(e.Position));
+            Toast.MakeText(this, toast, ToastLength.Long).Show();
         }
 
         public string GetSrcUrl(int routeIdOfDirectionChoosen)
@@ -108,7 +155,8 @@ namespace trackMe
         }
         private List<Route> GetDirections(string lineNumber, string operatorName)
         {
-            return dbHelper.GetDirections(lineNumber, operatorName);
+            int operatorId = dbHelper.GetAgencyNumberByName(operatorName);
+            return dbHelper.GetDirections(lineNumber, operatorId.ToString());
         }
 
     }

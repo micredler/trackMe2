@@ -181,6 +181,8 @@ namespace trackMe.Data
                 var response = connection.Query<Route>
                     ($"SELECT route_id, destination FROM routes WHERE route_short_name like '{lineNumber}' and agency_id like '{operatorName}' GROUP BY destination").ToList();
 
+                    // next line to get result for test
+                    // ($"SELECT route_id, destination FROM routes WHERE route_short_name like '{lineNumber}' GROUP BY destination").ToList();
                 return response;
             }
 
