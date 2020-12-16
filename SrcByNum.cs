@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Android.App;
 using Android.OS;
 using Android.Widget;
@@ -12,6 +13,7 @@ namespace trackMe
     [Activity(Label = "SrcByNum")]
     public class SrcByNum : Activity
     {
+        Boolean writeNow = false;
         DBHelper dbHelper = new DBHelper();
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -41,7 +43,8 @@ namespace trackMe
 
             // int routeIdOfDirectionChoosen = 5; // directions.First(d => d.destination.Equals(fakeDirectionThatChoosen)).route_id;
             operatorAutoComplete.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(OperatorSelected);
-            txtLine.AfterTextChanged += new EventHandler<Android.Text.AfterTextChangedEventArgs>(LineChange);
+            txtLine.FocusChange += new EventHandler<Android.Views.View.FocusChangeEventArgs> (LineChange);
+            txtLine.TextChanged += new EventHandler<Android.Text.TextChangedEventArgs>(TextLineChange);
             Spinner spinner = FindViewById<Spinner>(Resource.Id.spinner);
 
 
@@ -89,12 +92,45 @@ namespace trackMe
             // Alert.AlertMessage(this, "test", operatorAutoComplete.Text);
         }
 
-        private void LineChange(object sender, Android.Text.AfterTextChangedEventArgs e)
+        private void LineChange(object sender, Android.Views.View.FocusChangeEventArgs e)
         {
-            string newText = e.ToString();
-            Alert.AlertMessage(this, "test", newText);
+            if (!e.HasFocus)
+            {
+                TextView txtLine = (TextView)sender;
+                AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
+                if (operatorAutoComplete.Text != "" && txtLine.Text != "")
+                {
+                    SetDataForSpinner(operatorAutoComplete.Text, txtLine.Text);
+                }
+            }
         }
+        private void TextLineChange(object sender, Android.Text.TextChangedEventArgs e)
+        {
+            writeNow = true;
+            System.Threading.Tasks.Task.Factory.StartNew(() => {
+                Thread.Sleep(800); // delay execution for 500 ms
+               writeNow = false;
+                Alert.AlertMessage(this, "1", "1");
+                
+            });
+            System.Threading.Tasks.Task.Factory.StartNew(() => {
+                Thread.Sleep(1500); // delay execution for 500 ms
+                Alert.AlertMessage(this, "2", "2");
+                if (!writeNow)
+                {
+                    TextView txtLine = (TextView)sender;
+                    AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
+                    if (operatorAutoComplete.Text != "" && txtLine.Text != "")
+                    {
+                        SetDataForSpinner(operatorAutoComplete.Text, txtLine.Text);
+                        Alert.AlertMessage(this, "test", txtLine.Text);
+                    }
+                }
 
+            });
+            
+        }
+        
         private void SetDataForSpinner(string operatorText, string line)
         {
             List<Route> directions = GetDirections(line, operatorText);
