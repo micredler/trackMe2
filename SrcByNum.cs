@@ -107,27 +107,27 @@ namespace trackMe
         private void TextLineChange(object sender, Android.Text.TextChangedEventArgs e)
         {
             writeNow = true;
-            System.Threading.Tasks.Task.Factory.StartNew(() => {
-                Thread.Sleep(800); // delay execution for 500 ms
-               writeNow = false;
-                Alert.AlertMessage(this, "1", "1");
+            //System.Threading.Tasks.Task.Factory.StartNew(() => {
+            //    Thread.Sleep(800); // delay execution for 500 ms
+            //   writeNow = false;
+            //    Alert.AlertMessage(this, "1", "1");
                 
-            });
-            System.Threading.Tasks.Task.Factory.StartNew(() => {
-                Thread.Sleep(1500); // delay execution for 500 ms
-                Alert.AlertMessage(this, "2", "2");
-                if (!writeNow)
-                {
-                    TextView txtLine = (TextView)sender;
-                    AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
-                    if (operatorAutoComplete.Text != "" && txtLine.Text != "")
-                    {
-                        SetDataForSpinner(operatorAutoComplete.Text, txtLine.Text);
-                        Alert.AlertMessage(this, "test", txtLine.Text);
-                    }
-                }
+            //});
+            //System.Threading.Tasks.Task.Factory.StartNew(() => {
+            //    Thread.Sleep(1500); // delay execution for 500 ms
+            //    Alert.AlertMessage(this, "2", "2");
+            //    if (!writeNow)
+            //    {
+            //        TextView txtLine = (TextView)sender;
+            //        AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
+            //        if (operatorAutoComplete.Text != "" && txtLine.Text != "")
+            //        {
+            //            SetDataForSpinner(operatorAutoComplete.Text, txtLine.Text);
+            //            Alert.AlertMessage(this, "test", txtLine.Text);
+            //        }
+            //    }
 
-            });
+            //});
             
         }
         
