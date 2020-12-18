@@ -17,8 +17,6 @@ public class FavoriteElementId
         }
 }
 
-
-
     public enum SEARCH_TYPE
     {
         train = 1,

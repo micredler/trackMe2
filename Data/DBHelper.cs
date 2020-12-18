@@ -20,7 +20,7 @@ namespace trackMe.Data
             try
             {
                 SQLiteConnection connection = dbConnection.CreateConnection();
-                var stops = connection.Query<Stop>($"SELECT stop_name FROM stops WHERE stop_code = {stopCode}");
+                var stops = connection.Query<StopData>($"SELECT stop_name FROM stops WHERE stop_code = {stopCode}");
 
                 return stops[0].stop_name.ToString();
             }
@@ -38,7 +38,7 @@ namespace trackMe.Data
                 int agencyNumber = GetAgencyNumberByName(agencySelected);
 
                 SQLiteConnection connection = dbConnection.CreateConnection();
-                List<Route> routeId = connection.Query<Route>($"SELECT * FROM routes WHERE route_short_name = {lineNumFromUser} and agency_id = {agencyNumber}");
+                List<RouteData> routeId = connection.Query<RouteData>($"SELECT * FROM routes WHERE route_short_name = {lineNumFromUser} and agency_id = {agencyNumber}");
 
                 return routeId.First().route_id.ToString();
             }
@@ -54,7 +54,7 @@ namespace trackMe.Data
             try
             {
                 SQLiteConnection connection = dbConnection.CreateConnection();
-                List<TrainStop> trainStops = connection.Query<TrainStop>($"SELECT stop_merged FROM train_stops");
+                List<TrainStopData> trainStops = connection.Query<TrainStopData>($"SELECT stop_merged FROM train_stops");
 
                 return trainStops.Select(s => s.stop_merged).OfType<string>().ToArray();
             }
@@ -86,7 +86,7 @@ namespace trackMe.Data
             try
             {
                 SQLiteConnection connection = dbConnection.CreateConnection();
-                TrainStop trainStops = connection.Query<TrainStop>($"SELECT * FROM train_stops WHERE stop_merged LIKE '%{trainStationName}%'").First();
+                TrainStopData trainStops = connection.Query<TrainStopData>($"SELECT * FROM train_stops WHERE stop_merged LIKE '%{trainStationName}%'").First();
                 return trainStops.stop_code;
             }
 
@@ -173,12 +173,12 @@ namespace trackMe.Data
             }
 
         }
-        public List<Route> GetDirections(string lineNumber, string operatorName)
+        public List<RouteData> GetDirections(string lineNumber, string operatorName)
         {
             try
             {
                 SQLiteConnection connection = dbConnection.CreateConnection();
-                var response = connection.Query<Route>
+                var response = connection.Query<RouteData>
                     ($"SELECT route_id, destination FROM routes WHERE route_short_name like '{lineNumber}' and agency_id like '{operatorName}' GROUP BY destination").ToList();
 
                     // next line to get result for test

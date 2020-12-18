@@ -2,7 +2,7 @@
 
 namespace trackMe.Data
 {
-    public class Route
+    public class RouteData
     {
         [PrimaryKey, AutoIncrement]
         public int route_id { get; set; }

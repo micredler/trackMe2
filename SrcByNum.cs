@@ -52,7 +52,7 @@ namespace trackMe
 
             btnSearch.Click += delegate
             {
-                List<Route> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
+                List<RouteData> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
                 int routeIdOfDirectionChoosen = directions.First(d => d.destination.Equals(spinner.SelectedItem.ToString())).route_id;
                 labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
                 labelFavorite.Text = "";
@@ -61,7 +61,7 @@ namespace trackMe
 
             btnFavorite.Click += delegate
             {
-                List<Route> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
+                List<RouteData> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
                 int routeIdOfDirectionChoosen = directions.First(d => d.destination.Equals(spinner.SelectedItem.ToString())).route_id;
                 string favoriteName = "חברה " + operatorAutoComplete.Text + " קו " + txtLine.Text;
                 dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(routeIdOfDirectionChoosen), (int)SEARCH_TYPE.line);
@@ -118,7 +118,7 @@ namespace trackMe
 
         private void SetDataForSpinner(string operatorText, string line)
         {
-            List<Route> directions = GetDirections(line, operatorText);
+            List<RouteData> directions = GetDirections(line, operatorText);
             List<string> optionalDirections = directions.Select(direction => direction.destination).ToList();
             Spinner spinner = FindViewById<Spinner>(Resource.Id.spinner);
             spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
@@ -174,7 +174,7 @@ namespace trackMe
             }
             //System.Diagnostics.Debug.WriteLine(j);
         }
-        private List<Route> GetDirections(string lineNumber, string operatorName)
+        private List<RouteData> GetDirections(string lineNumber, string operatorName)
         {
             int operatorId = dbHelper.GetAgencyNumberByName(operatorName);
             return dbHelper.GetDirections(lineNumber, operatorId.ToString());
