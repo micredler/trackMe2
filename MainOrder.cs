@@ -15,7 +15,7 @@ using Xamarin.Essentials;
 namespace trackMe
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainOreder : Activity
+    public class MainOrder : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
