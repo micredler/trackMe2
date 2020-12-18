@@ -34,7 +34,7 @@ namespace trackMe
             operatorAutoComplete.Adapter = adapter;
 
             // List<Route> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
-         
+
             // List<string> optionalDirections = directions.Select(direction => direction.destination).ToList();
 
             // here you'll use the direction
@@ -43,7 +43,7 @@ namespace trackMe
 
             // int routeIdOfDirectionChoosen = 5; // directions.First(d => d.destination.Equals(fakeDirectionThatChoosen)).route_id;
             operatorAutoComplete.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(OperatorSelected);
-            txtLine.FocusChange += new EventHandler<Android.Views.View.FocusChangeEventArgs> (LineChange);
+            txtLine.FocusChange += new EventHandler<Android.Views.View.FocusChangeEventArgs>(LineChange);
             txtLine.TextChanged += new EventHandler<Android.Text.TextChangedEventArgs>(TextLineChange);
             Spinner spinner = FindViewById<Spinner>(Resource.Id.spinner);
 
@@ -106,31 +106,16 @@ namespace trackMe
         }
         private void TextLineChange(object sender, Android.Text.TextChangedEventArgs e)
         {
-            writeNow = true;
-            //System.Threading.Tasks.Task.Factory.StartNew(() => {
-            //    Thread.Sleep(800); // delay execution for 500 ms
-            //   writeNow = false;
-            //    Alert.AlertMessage(this, "1", "1");
-                
-            //});
-            //System.Threading.Tasks.Task.Factory.StartNew(() => {
-            //    Thread.Sleep(1500); // delay execution for 500 ms
-            //    Alert.AlertMessage(this, "2", "2");
-            //    if (!writeNow)
-            //    {
-            //        TextView txtLine = (TextView)sender;
-            //        AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
-            //        if (operatorAutoComplete.Text != "" && txtLine.Text != "")
-            //        {
-            //            SetDataForSpinner(operatorAutoComplete.Text, txtLine.Text);
-            //            Alert.AlertMessage(this, "test", txtLine.Text);
-            //        }
-            //    }
 
-            //});
-            
+            TextView txtLine = (TextView)sender;
+            AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
+            if (operatorAutoComplete.Text != "" && txtLine.Text != "")
+            {
+                SetDataForSpinner(operatorAutoComplete.Text, txtLine.Text);
+            }
+
         }
-        
+
         private void SetDataForSpinner(string operatorText, string line)
         {
             List<Route> directions = GetDirections(line, operatorText);
