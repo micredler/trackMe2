@@ -73,7 +73,6 @@
   <ItemGroup>
     <Compile Include="BL\Alert.cs" />
     <Compile Include="BL\ApiService.cs" />
-    <Compile Include="BL\Consts.cs" />
     <Compile Include="BL\DataGenerator.cs" />
     <Compile Include="BL\Models.cs" />
     <Compile Include="BL\WebApiModels.cs" />
@@ -81,14 +80,13 @@
     <Compile Include="Data\DBConnection.cs" />
     <Compile Include="Data\Agency.cs" />
     <Compile Include="Data\FavoriteData.cs" />
-    <Compile Include="Data\TrainStop.cs" />
-    <Compile Include="Data\Route.cs" />
-    <Compile Include="Data\Stop.cs" />
+    <Compile Include="Data\TrainStopData.cs" />
+    <Compile Include="Data\RouteData.cs" />
+    <Compile Include="Data\StopData.cs" />
     <Compile Include="Favorite.cs" />
-    <Compile Include="MainOreder.cs" />
+    <Compile Include="MainOrder.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SrcByAdd.cs" />
     <Compile Include="SrcByNum.cs" />
     <Compile Include="SrcByStation.cs" />
     <Compile Include="Map.cs" />
@@ -191,11 +189,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\src_by_station.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\src_by_add.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -2,11 +2,12 @@
 
 namespace trackMe.Data
 {
-    public class Stop
+    public class TrainStopData
     {
         [PrimaryKey, AutoIncrement]
         public int stop_code { get; set; }
         public string stop_name { get; set; }
-        public string stop_des { get; set; }
+        public string stop_city { get; set; }
+        public string stop_merged { get; set; }
     }
 }
