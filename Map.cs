@@ -22,8 +22,7 @@ namespace trackMe
             webView.Settings.JavaScriptEnabled = true;
             webView.Settings.DomStorageEnabled = true;
 
-            //if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-                webView.Settings.MixedContentMode = MixedContentHandling.AlwaysAllow;
+            webView.Settings.MixedContentMode = MixedContentHandling.AlwaysAllow;
             webView.LoadUrl("file:///android_asset/map.html");
         }
     }

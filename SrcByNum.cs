@@ -33,15 +33,6 @@ namespace trackMe
 
             operatorAutoComplete.Adapter = adapter;
 
-            // List<Route> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
-
-            // List<string> optionalDirections = directions.Select(direction => direction.destination).ToList();
-
-            // here you'll use the direction
-            // and choose string from optionalDirections
-            // var fakeDirectionThatChoosen = "קו לתל אביב";
-
-            // int routeIdOfDirectionChoosen = 5; // directions.First(d => d.destination.Equals(fakeDirectionThatChoosen)).route_id;
             operatorAutoComplete.ItemClick += new EventHandler<AdapterView.ItemClickEventArgs>(OperatorSelected);
             txtLine.FocusChange += new EventHandler<Android.Views.View.FocusChangeEventArgs>(LineChange);
             txtLine.TextChanged += new EventHandler<Android.Text.TextChangedEventArgs>(TextLineChange);
@@ -66,7 +57,7 @@ namespace trackMe
                 string favoriteName = "חברה " + operatorAutoComplete.Text + " קו " + txtLine.Text;
                 dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(routeIdOfDirectionChoosen), (int)SEARCH_TYPE.line);
                 Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
-                //Alert("the url is", GetSrcUrl(txtLine.Text, operatorAutoComplete.Text));
+                
             };
 
             string favoriteUrl = "";

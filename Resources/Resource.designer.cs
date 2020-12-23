@@ -4153,19 +4153,16 @@ namespace trackMe
 			public const int select_dialog_singlechoice_material = 2131427386;
 			
 			// aapt resource value: 0x7F0B003B
-			public const int src_by_add = 2131427387;
+			public const int src_by_num = 2131427387;
 			
 			// aapt resource value: 0x7F0B003C
-			public const int src_by_num = 2131427388;
+			public const int src_by_station = 2131427388;
 			
 			// aapt resource value: 0x7F0B003D
-			public const int src_by_station = 2131427389;
+			public const int support_simple_spinner_dropdown_item = 2131427389;
 			
 			// aapt resource value: 0x7F0B003E
-			public const int support_simple_spinner_dropdown_item = 2131427390;
-			
-			// aapt resource value: 0x7F0B003F
-			public const int train = 2131427391;
+			public const int train = 2131427390;
 			
 			static Layout()
 			{

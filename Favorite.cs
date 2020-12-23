@@ -23,9 +23,7 @@ namespace trackMe
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.favorite);
-            // Create your application here
-
-            //dBHelper.AddNewFavorite("400 to jeru", @"www.google.com");
+            
             List<FavoriteData> favorites = dBHelper.GetFavorites();
             
             GetDataToScreen();

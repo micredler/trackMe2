@@ -39,18 +39,7 @@ namespace trackMe.BL
                 }
                 secondPart = true;
             }
-            //string[] destWords = destParts[relevantIndex].Split(" ");
-
-            //shortDest = relevantIndex > 0 ? destParts[0] + "/" : "";
-            //if (destWords.Length > 1)
-            //{
-            //    shortDest += destWords[destWords.GetUpperBound(0) - 1];
-            //    shortDest += " " + destWords[destWords.GetUpperBound(0)];
-            //} else
-            //{
-            //    shortDest = string.Join("/", destParts);
-            //}
-
+     
             return shortDest;
         }
         public List<FavoriteElementId> setFavorites(List<FavoriteData> favorites, Context context, Resources resources, Activity currentObj
@@ -90,7 +79,6 @@ namespace trackMe.BL
                 deleteBtn.SetMaxWidth(30);
                 deleteBtn.SetBackgroundColor(Android.Graphics.Color.Transparent);
 
-                //deleteBtn.SetMaxHeight(5);
                 deleteBtn.TextAlignment = TextAlignment.ViewEnd;
 
                 tr.AddView(tv1);
@@ -115,11 +103,6 @@ namespace trackMe.BL
             Boolean colored = false;
 
 
-            // TO DO
-            // חיפוש לפי קו לשמור כל סבב שכבר נכנסתי אליו לפי המשתנה
-            // DatedVehicleJourneyRef
-            // ואז לקרוא את כל התחנות שלו פעם אחת לפי המערך של ה
-            // OnwardCalls
             if (searchType == "line")
             {
                 List<string> idLoop = new List<string>();
@@ -154,9 +137,8 @@ namespace trackMe.BL
 
                                 TextView tv1 = new TextView(context);
                                 string firstStationName = dbHelper.ReadStationName(call.StopPointRef);
-                                firstStationName = GetShortDest(firstStationName);
-                                //firstStationName = firstStationName.Replace("/הורדה", "");
-                                //firstStationName = firstStationName.Replace("שדרות", "");
+                                firstStationName = GetShortDest(firstStationName); // design the destination
+                               
                                 tv1.Text = firstStationName;
                                 tv1.TextAlignment = TextAlignment.ViewEnd;
                                 tv1.SetMaxWidth(400);
@@ -169,8 +151,7 @@ namespace trackMe.BL
                                 tv3.SetMaxWidth(400);
                                 string stationName = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
                                 stationName = GetShortDest(stationName);
-                                //stationName = stationName.Replace("/הורדה", "");
-                                //stationName = stationName.Replace("שדרות", "");
+                               
                                 tv3.Text = stationName;
                                 tv3.TextAlignment = TextAlignment.Center;
 
@@ -184,7 +165,7 @@ namespace trackMe.BL
                                 {
                                     tv4.Text = tv2.Text;
                                 }
-                                //tv4.Text = Row.MonitoredVehicleJourney.DestinationRef;
+
                                 tv4.TextAlignment = TextAlignment.Center;
 
                                 tr.AddView(tv4);
@@ -228,7 +209,7 @@ namespace trackMe.BL
                     TextView tv3 = new TextView(context);
                     string stationName = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
                     stationName = GetShortDest(stationName);
-                    // stationName = stationName.Replace("/הורדה", "");
+                    
                     tv3.Text = stationName;
                     tv3.TextAlignment = TextAlignment.Center;
 
@@ -242,7 +223,7 @@ namespace trackMe.BL
                     {
                         tv4.Text = tv2.Text;
                     }
-                    //tv4.Text = Row.MonitoredVehicleJourney.DestinationRef;
+                    
                     tv4.TextAlignment = TextAlignment.Center;
 
                     tr.AddView(tv4);

@@ -24,7 +24,7 @@ namespace trackMe
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.src_by_station);
-            // Create your application here
+
             TextView txtStation = FindViewById<TextView>(Resource.Id.txt_staion_num);
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_station);
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_by_station);
@@ -44,7 +44,6 @@ namespace trackMe
                 string favoriteName = "תחנה " + txtStation.Text;
                 dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtStation.Text), (int) SEARCH_TYPE.station);
                 Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
-                //Alert("the url is", GetSrcUrl(txtStation.Text));
             };
             string favoriteUrl = "";
             favoriteUrl = Intent.GetStringExtra("url");
@@ -83,13 +82,11 @@ namespace trackMe
                 }
                 DataGenerator dataGenerator = new DataGenerator();
                 dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "station");
-                // setTableData(visits, mTableLayout);
             }
             catch
             {
                 Alert.AlertMessage(this, "הודעת מערכת", "מספר התחנה לא מופיע במערכת");
             }
-            //System.Diagnostics.Debug.WriteLine(j);
         }
         
     }

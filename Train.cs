@@ -18,7 +18,7 @@ namespace trackMe
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.train);
-            // Create your application here
+            
             string[] TRAIN_STATION = dbHelper.GetAllTrainStopsName();
 
             AutoCompleteTextView textView = FindViewById<AutoCompleteTextView>(Resource.Id.autocomplete_train);
@@ -32,7 +32,6 @@ namespace trackMe
             ImageButton btnFavorite = FindViewById<ImageButton>(Resource.Id.save_favorite);
             TextView labelFavorite = FindViewById<TextView>(Resource.Id.labelFavorite);
 
-            // TODO: handle case the user leave the input and doesnt choose
             btnSearch.Click += delegate
             {
                 labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
@@ -46,7 +45,7 @@ namespace trackMe
                 string favoriteName = "תחנת רכבת " + srcTrain.Text;
                 dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(srcTrain.Text), (int) SEARCH_TYPE.train);
                 Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
-                //Alert("the url is", GetSrcUrl(srcTrain.Text));
+                
             };
 
             string favoriteUrl = "";
@@ -97,10 +96,8 @@ namespace trackMe
                 List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 DataGenerator dataGenerator = new DataGenerator();
                 dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "station");
-                // setTableData(visits, mTableLayout);
             }
 
-            //System.Diagnostics.Debug.WriteLine(j);
         }
     }
 }
