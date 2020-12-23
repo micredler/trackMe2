@@ -11,13 +11,13 @@ using trackMe.Data;
 namespace trackMe
 {
     [Activity(Label = "Train")]
-    public class Train : Activity
+    public class SearchTrain : Activity
     {
         readonly DBHelper dbHelper = new DBHelper();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.train);
+            SetContentView(Resource.Layout.search_train);
             
             string[] TRAIN_STATION = dbHelper.GetAllTrainStopsName();
 

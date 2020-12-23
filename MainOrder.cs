@@ -34,17 +34,17 @@ namespace trackMe
 
             Button btnSrcNum = FindViewById<Button>(Resource.Id.btn_src_num);
             btnSrcNum.Click += delegate {
-                StartActivity(typeof(SrcByNum));
+                StartActivity(typeof(SearchByNum));
             };
 
             Button btnSrcStation = FindViewById<Button>(Resource.Id.btn_src_station);
             btnSrcStation.Click += delegate {
-                StartActivity(typeof(SrcByStation));
+                StartActivity(typeof(SearchByStation));
             };
 
             Button btnTrain = FindViewById<Button>(Resource.Id.btn_train);
             btnTrain.Click += delegate {
-                StartActivity(typeof(Train));
+                StartActivity(typeof(SearchTrain));
             };
             
         }

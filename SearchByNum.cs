@@ -11,14 +11,14 @@ using trackMe.Data;
 namespace trackMe
 {
     [Activity(Label = "SrcByNum")]
-    public class SrcByNum : Activity
+    public class SearchByNum : Activity
     {
         Boolean writeNow = false;
         DBHelper dbHelper = new DBHelper();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.src_by_num);
+            SetContentView(Resource.Layout.search_by_num);
             // Create your application here
             TextView txtLine = FindViewById<TextView>(Resource.Id.txt_line_num);
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_num);

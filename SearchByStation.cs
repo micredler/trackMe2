@@ -17,13 +17,13 @@ using trackMe.Data;
 namespace trackMe
 {
     [Activity(Label = "SrcByStation")]
-    public class SrcByStation : Activity
+    public class SearchByStation : Activity
     {
         readonly DBHelper dbHelper = new DBHelper();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.src_by_station);
+            SetContentView(Resource.Layout.search_by_station);
 
             TextView txtStation = FindViewById<TextView>(Resource.Id.txt_staion_num);
             Button btnSearch = FindViewById<Button>(Resource.Id.btn_search_station);

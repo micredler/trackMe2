@@ -58,13 +58,13 @@ namespace trackMe
                     switch (Row.SearchType)
                     {
                         case (int) SEARCH_TYPE.line:
-                            activity = new Intent(this, typeof(SrcByNum));
+                            activity = new Intent(this, typeof(SearchByNum));
                             break;
                         case (int)SEARCH_TYPE.train:
-                            activity = new Intent(this, typeof(Train));
+                            activity = new Intent(this, typeof(SearchTrain));
                             break;
                         case (int)SEARCH_TYPE.station:
-                            activity = new Intent(this, typeof(SrcByStation));
+                            activity = new Intent(this, typeof(SearchByStation));
                             break;
                         default:
                             return;
