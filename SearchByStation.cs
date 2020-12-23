@@ -20,6 +20,7 @@ namespace trackMe
     public class SearchByStation : Activity
     {
         readonly DBHelper dbHelper = new DBHelper();
+        readonly ApiService apiService = new ApiService();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -42,8 +43,7 @@ namespace trackMe
             btnFavorite.Click += delegate
             {
                 string favoriteName = "תחנה " + txtStation.Text;
-                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(txtStation.Text), (int) SEARCH_TYPE.station);
-                Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
+                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(txtStation.Text), (int) SEARCH_TYPE.station);
             };
             string favoriteUrl = "";
             favoriteUrl = Intent.GetStringExtra("url");
@@ -56,20 +56,18 @@ namespace trackMe
             }
         }
 
-        public string GetSrcUrl(string stationNum)
-        {
-            const string AND_SIGN = "%26";
-            const string STATION_PARAM = "MonitoringRef=";
-            const string CALLS = "StopVisitDetailLevel=calls";
+        //public string GetSrcUrl(string stationNum)
+        //{
+        //    const string AND_SIGN = "%26";
+        //    const string STATION_PARAM = "MonitoringRef=";
+        //    const string CALLS = "StopVisitDetailLevel=calls";
 
-            return STATION_PARAM + stationNum + AND_SIGN + CALLS;
-        }
+        //    return STATION_PARAM + stationNum + AND_SIGN + CALLS;
+        //}
 
         public async void GetData(string stationNum, TableLayout mTableLayout, string favoriteUrl = "")
         {
-            ApiService apiService = new ApiService();
-
-            string urlToSend = favoriteUrl != "" ? favoriteUrl : GetSrcUrl(stationNum);
+            string urlToSend = favoriteUrl != "" ? favoriteUrl : apiService.GetSrcUrl(stationNum);
             ApiResponse apiResponse = await apiService.GetDataFromApi(urlToSend);
             try
             {
@@ -77,7 +75,7 @@ namespace trackMe
                 List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 if (visits.Count == 0)
                 {
-                    Alert.AlertMessage(this, "הודעת מערכת", "לא נמצאו נסיעות קרובות לתחנה זו");
+                    Alert.AlertMessage(this, "לא נמצאו נסיעות קרובות לתחנה זו");
                     return;
                 }
                 DataGenerator dataGenerator = new DataGenerator();
@@ -85,7 +83,7 @@ namespace trackMe
             }
             catch
             {
-                Alert.AlertMessage(this, "הודעת מערכת", "מספר התחנה לא מופיע במערכת");
+                Alert.AlertMessage(this, "מספר התחנה לא מופיע במערכת");
             }
         }
         

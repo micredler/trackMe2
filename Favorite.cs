@@ -46,7 +46,7 @@ namespace trackMe
                 Row.Btn.Click += delegate
                 {
                     dBHelper.DeleteFavorite(this, Row.Name);
-                    Alert.AlertMessage(this, "הודעת מערכת", Row.Name + " נמחק");
+                    Alert.AlertMessage(this, Row.Name + " נמחק");
                     GetDataToScreen();
 
 

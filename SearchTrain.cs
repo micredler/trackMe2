@@ -14,6 +14,7 @@ namespace trackMe
     public class SearchTrain : Activity
     {
         readonly DBHelper dbHelper = new DBHelper();
+        readonly ApiService apiService = new ApiService();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -36,16 +37,20 @@ namespace trackMe
             {
                 labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
                 labelFavorite.Text = "";
-                GetData(srcTrain.Text, mTableLayout);
+                int stationNumber = FindTrainStationNumberByName(srcTrain.Text);
+                if (stationNumber == 0) { return; }
+
+                GetData(stationNumber, mTableLayout);
 
             };
 
             btnFavorite.Click += delegate
             {
                 string favoriteName = "תחנת רכבת " + srcTrain.Text;
-                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(srcTrain.Text), (int) SEARCH_TYPE.train);
-                Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
-                
+                int stationNumber = FindTrainStationNumberByName(srcTrain.Text);
+                if (stationNumber == 0) { return; }
+
+                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(stationNumber), (int) SEARCH_TYPE.train); 
             };
 
             string favoriteUrl = "";
@@ -55,40 +60,32 @@ namespace trackMe
                 labelFavorite.Visibility = Android.Views.ViewStates.Visible;
                 string searchName = Intent.GetStringExtra("searchName");
                 labelFavorite.Text = searchName;
-                GetData("", mTableLayout, favoriteUrl);
+                GetData(0, mTableLayout, favoriteUrl);
             }
 
         }
 
-        public string GetSrcUrl(string trainStationName)
+        private int FindTrainStationNumberByName(string stationName)
         {
-            const string AND_SIGN = "%26";
-            const string STATION_PARAM = "MonitoringRef=";
-            const string CALLS = "StopVisitDetailLevel=calls";
-            int stationNumber = dbHelper.GetTrainStationNumberByName(trainStationName);
+            int stationNumber = dbHelper.GetTrainStationNumberByName(stationName);
 
             if (stationNumber == 0)
             {
-                Alert.AlertMessage(this, "הודעת מערכת", "תחנת הרכבת לא מופיעה במערכת");
-                return null;
+                Alert.AlertMessage(this, "תחנת הרכבת לא מופיעה במערכת");
             }
+            return stationNumber;
 
-            else
-            {
-
-                return STATION_PARAM + stationNumber + AND_SIGN + CALLS;
-            }
         }
 
-        public async void GetData(string trainStationName, TableLayout mTableLayout, string favoriteUrl = "")
+
+        public async void GetData(int stationNumber, TableLayout mTableLayout, string favoriteUrl = "")
         {
-            ApiService apiService = new ApiService();
-            string urlToSend = favoriteUrl != "" ? favoriteUrl : GetSrcUrl(trainStationName);
+            string urlToSend = favoriteUrl != "" ? favoriteUrl : apiService.GetSrcUrl(stationNumber);
             ApiResponse apiResponse = await apiService.GetDataFromApi(urlToSend);
 
             if (apiResponse?.Siri?.ServiceDelivery?.StopMonitoringDelivery?[0]?.MonitoredStopVisit?.Count == 0)
             { 
-                Alert.AlertMessage(this, "הודעת מערכת", "אין רכבות בתחנה ב30 הדקות הקרובות");
+                Alert.AlertMessage(this, "אין רכבות בתחנה ב30 הדקות הקרובות");
             }
 
             else if (apiResponse.Siri != null)

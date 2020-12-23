@@ -13,8 +13,8 @@ namespace trackMe
     [Activity(Label = "SrcByNum")]
     public class SearchByNum : Activity
     {
-        Boolean writeNow = false;
         DBHelper dbHelper = new DBHelper();
+        ApiService apiService = new ApiService();
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -44,10 +44,15 @@ namespace trackMe
             btnSearch.Click += delegate
             {
                 List<RouteData> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
+                if (directions.Count == 0)
+                {
+                    Alert.AlertMessage(this, "אין קווים העונים לחיפוש זה");
+                    return;
+                }
                 int routeIdOfDirectionChoosen = directions.First(d => d.destination.Equals(spinner.SelectedItem.ToString())).route_id;
                 labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
                 labelFavorite.Text = "";
-                GetData(txtLine.Text, mTableLayout, operatorAutoComplete.Text, routeIdOfDirectionChoosen);
+                GetData(mTableLayout, routeIdOfDirectionChoosen);
             };
 
             btnFavorite.Click += delegate
@@ -55,8 +60,7 @@ namespace trackMe
                 List<RouteData> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
                 int routeIdOfDirectionChoosen = directions.First(d => d.destination.Equals(spinner.SelectedItem.ToString())).route_id;
                 string favoriteName = "חברה " + operatorAutoComplete.Text + " קו " + txtLine.Text;
-                dbHelper.AddNewFavorite(this, favoriteName, GetSrcUrl(routeIdOfDirectionChoosen), (int)SEARCH_TYPE.line);
-                Alert.AlertMessage(this, "הודעת מערכת", favoriteName + " נוסף למועדפים");
+                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(this, routeIdOfDirectionChoosen), (int)SEARCH_TYPE.line);
                 
             };
 
@@ -67,7 +71,7 @@ namespace trackMe
                 labelFavorite.Visibility = Android.Views.ViewStates.Visible;
                 string searchName = Intent.GetStringExtra("searchName");
                 labelFavorite.Text = searchName;
-                GetData("", mTableLayout, "", 0, favoriteUrl);
+                GetData(mTableLayout, 0, favoriteUrl);
             }
         }
 
@@ -126,29 +130,10 @@ namespace trackMe
             Toast.MakeText(this, toast, ToastLength.Long).Show();
         }
 
-        public string GetSrcUrl(int routeIdOfDirectionChoosen)
+       
+        public async void GetData(TableLayout mTableLayout, int routeIdOfDirectionChoosen, string favoriteUrl = "")
         {
-            const string AND_SIGN = "%26";
-            const string STATION_PARAM = "MonitoringRef=all";
-            const string LINE_PARAM = "LineRef=";
-            const string CALLS = "StopVisitDetailLevel=calls";
-
-            if (routeIdOfDirectionChoosen == 0)
-            {
-                Alert.AlertMessage(this, "הודעת מערכת", "מספר הקו לא מופיע במערכת");
-                return null;
-            }
-
-            else
-            {
-                return STATION_PARAM + AND_SIGN + LINE_PARAM + routeIdOfDirectionChoosen + AND_SIGN + CALLS;
-            }
-        }
-
-        public async void GetData(string lineNumFromUser, TableLayout mTableLayout, string agencySelected, int routeIdOfDirectionChoosen, string favoriteUrl = "")
-        {
-            ApiService apiService = new ApiService();
-            string urlToSend = favoriteUrl != "" ? favoriteUrl : GetSrcUrl(routeIdOfDirectionChoosen);
+            string urlToSend = favoriteUrl != "" ? favoriteUrl : apiService.GetSrcUrl(this, routeIdOfDirectionChoosen);
             ApiResponse apiResponse = await apiService.GetDataFromApi(urlToSend);
 
             if (apiResponse.Siri != null)
@@ -156,7 +141,7 @@ namespace trackMe
                 List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 if (visits.Count == 0)
                 {
-                    Alert.AlertMessage(this, "הודעת מערכת", "לא נמצאו נסיעות קרובות לקו זה");
+                    Alert.AlertMessage(this, "לא נמצאו נסיעות קרובות לקו זה");
                     return;
                 }
                 DataGenerator dataGenerator = new DataGenerator();

@@ -208,7 +208,6 @@ namespace trackMe.BL
 
                     TextView tv3 = new TextView(context);
                     string stationName = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
-                    stationName = GetShortDest(stationName);
                     
                     tv3.Text = stationName;
                     tv3.TextAlignment = TextAlignment.Center;

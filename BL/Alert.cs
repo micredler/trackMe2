@@ -4,10 +4,11 @@ namespace trackMe.BL
 {
     public static class Alert
     {
-        public static void AlertMessage(Activity currentObj, string title, string msg)
+        const string TITLE = "הודעת מערכת";
+        public static void AlertMessage(Activity currentObj, string msg)
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(currentObj);
-            alert.SetTitle(title);
+            alert.SetTitle(TITLE);
             alert.SetMessage(msg);
 
             Dialog dialog = alert.Create();
