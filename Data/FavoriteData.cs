@@ -8,5 +8,6 @@ namespace trackMe.Data
         public string name { get; set; }
         public string url { get; set; }
         public int searchType { get; set; }
+        public string direction { get; set; }
     }
 }

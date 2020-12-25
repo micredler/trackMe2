@@ -59,6 +59,7 @@ namespace trackMe
                     {
                         case (int) SEARCH_TYPE.line:
                             activity = new Intent(this, typeof(SearchByNum));
+                            activity.PutExtra("direction", (Row as FavoriteLineElementId).Direction);
                             break;
                         case (int)SEARCH_TYPE.train:
                             activity = new Intent(this, typeof(SearchTrain));

@@ -59,8 +59,9 @@ namespace trackMe
             {
                 List<RouteData> directions = GetDirections(txtLine.Text, operatorAutoComplete.Text);
                 int routeIdOfDirectionChoosen = directions.First(d => d.destination.Equals(spinner.SelectedItem.ToString())).route_id;
-                string favoriteName = "חברה " + operatorAutoComplete.Text + " קו " + txtLine.Text;
-                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(this, routeIdOfDirectionChoosen), (int)SEARCH_TYPE.line);
+                string favoriteName = operatorAutoComplete.Text + " קו " + txtLine.Text;
+                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(this, routeIdOfDirectionChoosen),
+                    (int)SEARCH_TYPE.line, spinner.SelectedItem.ToString());
                 
             };
 
@@ -69,7 +70,7 @@ namespace trackMe
             if (favoriteUrl != null && favoriteUrl != "")
             {
                 labelFavorite.Visibility = Android.Views.ViewStates.Visible;
-                string searchName = Intent.GetStringExtra("searchName");
+                string searchName = Intent.GetStringExtra("searchName") + " " + Intent.GetStringExtra("direction");
                 labelFavorite.Text = searchName;
                 GetData(mTableLayout, 0, favoriteUrl);
             }

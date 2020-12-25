@@ -128,6 +128,22 @@ namespace trackMe.Data
                 return;
             }
         }
+        public void AddNewFavorite(Activity activity, string name, string url, int searchType, string direction)
+        {
+            const string ADDED = " נוסף למועדפים";
+            try
+            {
+                SQLiteConnection connection = dbConnection.CreateConnection();
+                connection.Query<FavoriteData>($"INSERT INTO favorites (name, url, searchType, direction) VALUES('{name}', '{url}', '{searchType}', '{direction}')");
+                Alert.AlertMessage(activity, name + ADDED);
+            }
+
+            catch (Exception)
+            {
+                Alert.AlertMessage(activity, "המועדף לא נוסף במערכת");
+                return;
+            }
+        }
         public void DeleteFavorite(Activity activity, string name)
         {
             try

@@ -39,7 +39,7 @@ namespace trackMe.BL
                 }
                 secondPart = true;
             }
-     
+
             return shortDest;
         }
         public List<FavoriteElementId> SetTableData(List<FavoriteData> favorites, Context context, Resources resources, Activity currentObj
@@ -64,15 +64,15 @@ namespace trackMe.BL
                 if (colored) tr.SetBackgroundColor(resources.GetColor(Resource.Color.eventRowResult));
                 colored = !colored;
                 tr.LayoutParameters = tableRowLayoutparams;
-
+                Boolean WITH_DIRECTION = Row.direction != null;
                 TextView tv1 = new TextView(context);
-                tv1.Text = Row.name;
+                tv1.Text = Row.name + (WITH_DIRECTION ? " " + Row.direction : "");
                 tv1.TextAlignment = TextAlignment.ViewEnd;
 
                 tv1.SetPadding(0, 0, 13, 0);
                 tv1.SetMinimumWidth(320);
-                tv1.SetTextSize(Android.Util.ComplexUnitType.Dip, 22);
-
+                tv1.SetTextSize(Android.Util.ComplexUnitType.Dip, WITH_DIRECTION ? 14 : 22);
+                tv1.SetMaxWidth(1000);
                 ImageButton deleteBtn = new ImageButton(context);
 
                 deleteBtn.SetImageResource(Android.Resource.Drawable.IcMenuDelete);
@@ -84,7 +84,14 @@ namespace trackMe.BL
                 tr.AddView(tv1);
                 tr.AddView(deleteBtn);
                 mTableLayout.AddView(tr);
-                response.Add(new FavoriteElementId(deleteBtn, tv1, Row.name, Row.searchType));
+                if (Row.direction == null)
+                {
+                    response.Add(new FavoriteElementId(deleteBtn, tv1, Row.name, Row.searchType));
+                }
+                else
+                {
+                    response.Add(new FavoriteLineElementId(deleteBtn, tv1, Row.name, Row.searchType, Row.direction));
+                }
             }
             return response;
         }
@@ -138,7 +145,7 @@ namespace trackMe.BL
                                 TextView tv1 = new TextView(context);
                                 string firstStationName = dbHelper.ReadStationName(call.StopPointRef);
                                 firstStationName = GetShortDest(firstStationName); // design the destination
-                               
+
                                 tv1.Text = firstStationName;
                                 tv1.TextAlignment = TextAlignment.ViewEnd;
                                 tv1.SetMaxWidth(400);
@@ -151,7 +158,7 @@ namespace trackMe.BL
                                 tv3.SetMaxWidth(400);
                                 string stationName = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
                                 stationName = GetShortDest(stationName);
-                               
+
                                 tv3.Text = stationName;
                                 tv3.TextAlignment = TextAlignment.Center;
 
@@ -208,7 +215,7 @@ namespace trackMe.BL
 
                     TextView tv3 = new TextView(context);
                     string stationName = dbHelper.ReadStationName(Row.MonitoredVehicleJourney.DestinationRef);
-                    
+
                     tv3.Text = stationName;
                     tv3.TextAlignment = TextAlignment.Center;
 
@@ -222,7 +229,7 @@ namespace trackMe.BL
                     {
                         tv4.Text = tv2.Text;
                     }
-                    
+
                     tv4.TextAlignment = TextAlignment.Center;
 
                     tr.AddView(tv4);
