@@ -17,7 +17,7 @@
         <ImageButton
             android:src="@drawable/abc_ic_star_black_36dp"
             android:layout_column="0"
-            android:tooltipText="שמור במועדפים"
+            android:tooltipText="@string/add_to_favorite"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:id="@+id/save_favorite" />
@@ -42,7 +42,7 @@
         android:visibility="invisible"
         android:id="@+id/labelFavorite" />
     <TextView
-        android:text="הכנס מספר תחנה"
+        android:text="@string/enter_station"
         android:textAlignment="viewEnd"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txt_staion_num" />
     <Button
-        android:text="חיפוש"
+        android:text="@string/search_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_search_station" />
@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="זמן הגעה ליעד"
+                android:text="@string/time_dest"
                 android:layout_marginLeft="5px"
                 android:layout_marginRight="5px"
                 android:id="@+id/textView1"
@@ -80,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="יעד"
+                android:text="@string/dest"
                 android:layout_marginLeft="5px"
                 android:layout_marginRight="5px"
                 android:textStyle="bold"
@@ -89,7 +89,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="שעת הגעה"
+                android:text="@string/time_source"
                 android:layout_marginLeft="5px"
                 android:layout_marginRight="5px"
                 android:textStyle="bold"
@@ -97,7 +97,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="מספר קו"
+                android:text="@string/line_num"
                 android:id="@+id/textView2"
                 android:textStyle="bold"
                 android:layout_marginRight="8px" />

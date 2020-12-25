@@ -1,8 +1,26 @@
 <resources>
   <string name="app_name">trackMe</string>
   <string name="action_settings">Settings</string>
-  <string name="favorite">מועדפים</string>
+  <string name="search_btn">חיפוש</string>
+  <string name="add_to_favorite">שמור במועדפים</string>
+
+  <string name="time_dest">שעה ביעד</string>
+  <string name="dest">יעד</string>
+  <string name="source">תחנת מוצא</string>
+  <string name="time_source">שעת הגעה</string>
+  
   <string name="src_by_num">חיפוש לפי קו</string>
+  <string name="choose_company">בחר חברה</string>
+  <string name="enter_line">הכנס מספר קו</string>
+  <string name="choose_direction">בחר כיוון נסיעה</string>
+
+  <string name="enter_station">הכנס מספר תחנה</string>
+  <string name="line_num">מספר קו</string>
+
+  <string name="platform">רציף</string>
+  <string name="insert_train_st">התחל להקליד תחנת רכבת</string>
+  
+  <string name="favorite">מועדפים</string>
   <string name="src_by_station">חיפוש לפי תחנה</string>
   <string name="src_by_adr">חיפוש לפי מוצא ויעד</string>
   <string name="map">מפה</string>

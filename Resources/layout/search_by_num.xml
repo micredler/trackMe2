@@ -57,12 +57,12 @@
             android:layout_height="match_parent"
             android:layout_width="82dp"
             android:layout_column="1"
-            android:text="בחר חברה"
+            android:text="@string/choose_company"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textView5" />
     </GridLayout>
     <TextView
-        android:text="הכנס מספר קו"
+        android:text="@string/enter_line"
         android:textAlignment="viewEnd"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
@@ -82,14 +82,14 @@
    android:layout_width="fill_parent"  
    android:layout_height="wrap_content"  
    android:layout_marginTop="10dip"  
-   android:text="בחר כיוון נסיעה" />  
+   android:text="@string/choose_direction" />  
 <Spinner  
    android:id="@+id/spinner"  
    android:layout_width="fill_parent"  
    android:layout_height="wrap_content"  
    android:prompt="@drawable/abc_btn_default_mtrl_shape" /> 
     <Button
-        android:text="חיפוש"
+        android:text="@string/search_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_search_num" />
@@ -110,7 +110,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="שעה ביעד"
+                    android:text="@string/time_dest"
                     android:layout_marginLeft="5px"
                     android:layout_marginRight="5px"
                     android:textStyle="bold"
@@ -119,7 +119,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="יעד"
+                    android:text="@string/dest"
                     android:layout_marginLeft="5px"
                     android:layout_marginRight="5px"
                     android:textStyle="bold"
@@ -129,7 +129,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="שעת הגעה"
+                    android:text="@string/time_source"
                     android:layout_marginLeft="5px"
                     android:layout_marginRight="5px"
                     android:textStyle="bold"
@@ -138,7 +138,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="תחנת מוצא"
+                    android:text="@string/source"
                     android:id="@+id/textView2"
                     android:textStyle="bold"
                     android:textAlignment="center"
