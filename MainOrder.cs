@@ -34,28 +34,19 @@ namespace trackMe
 
             Button btnSrcNum = FindViewById<Button>(Resource.Id.btn_src_num);
             btnSrcNum.Click += delegate {
-                StartActivity(typeof(SrcByNum));
+                StartActivity(typeof(SearchByNum));
             };
 
             Button btnSrcStation = FindViewById<Button>(Resource.Id.btn_src_station);
             btnSrcStation.Click += delegate {
-                StartActivity(typeof(SrcByStation));
+                StartActivity(typeof(SearchByStation));
             };
 
-            //Button btnSrcAdd = FindViewById<Button>(Resource.Id.btn_src_add);
-            //btnSrcAdd.Click += delegate {
-            //    StartActivity(typeof(SrcByAdd));
-            //};
             Button btnTrain = FindViewById<Button>(Resource.Id.btn_train);
             btnTrain.Click += delegate {
-                StartActivity(typeof(Train));
+                StartActivity(typeof(SearchTrain));
             };
-            //Button btnMaptst = FindViewById<Button>(Resource.Id.btn_maptst);
-            //btnMaptst.Click += delegate {
-            //    var uri = Android.Net.Uri.Parse("https://new.govmap.gov.il/?c=179239.52,666541.24&z=8&lay=KIDS_G,BUS_STOPS,TRAIN_STATOINS");
-            //    var intent = new Intent(Intent.ActionView, uri);
-            //    StartActivity(intent);
-            //};
+            
         }
     }
 }

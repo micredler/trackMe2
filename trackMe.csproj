@@ -87,10 +87,10 @@
     <Compile Include="MainOrder.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SrcByNum.cs" />
-    <Compile Include="SrcByStation.cs" />
+    <Compile Include="SearchByNum.cs" />
+    <Compile Include="SearchByStation.cs" />
     <Compile Include="Map.cs" />
-    <Compile Include="Train.cs" />
+    <Compile Include="SearchTrain.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\trackMeDB.db" />
@@ -183,12 +183,12 @@
     <AndroidResource Include="Resources\drawable\trackme.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\src_by_num.xml">
+    <AndroidResource Include="Resources\layout\search_by_num.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\src_by_station.xml">
+    <AndroidResource Include="Resources\layout\search_by_station.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -198,7 +198,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\train.xml">
+    <AndroidResource Include="Resources\layout\search_train.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

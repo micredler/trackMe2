@@ -114,15 +114,17 @@ namespace trackMe.Data
         }
         public void AddNewFavorite(Activity activity, string name, string url, int searchType)
         {
+            const string ADDED = " נוסף למועדפים";
             try
             {
                 SQLiteConnection connection = dbConnection.CreateConnection();
                 connection.Query<FavoriteData>($"INSERT INTO favorites (name, url, searchType) VALUES('{name}', '{url}', '{searchType}')");
+                Alert.AlertMessage(activity, name + ADDED);
             }
 
             catch (Exception)
             {
-                Alert.AlertMessage(activity, "הודעת מערכת", "המועדף לא נוסף במערכת");
+                Alert.AlertMessage(activity, "המועדף לא נוסף במערכת");
                 return;
             }
         }
@@ -136,7 +138,7 @@ namespace trackMe.Data
 
             catch (Exception)
             {
-                Alert.AlertMessage(activity, "הודעת מערכת", "המועדף לא נוסף במערכת");
+                Alert.AlertMessage(activity, "המועדף לא נוסף במערכת");
                 return;
             }
         }

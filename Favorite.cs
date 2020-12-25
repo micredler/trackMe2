@@ -23,9 +23,7 @@ namespace trackMe
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.favorite);
-            // Create your application here
-
-            //dBHelper.AddNewFavorite("400 to jeru", @"www.google.com");
+            
             List<FavoriteData> favorites = dBHelper.GetFavorites();
             
             GetDataToScreen();
@@ -48,7 +46,7 @@ namespace trackMe
                 Row.Btn.Click += delegate
                 {
                     dBHelper.DeleteFavorite(this, Row.Name);
-                    Alert.AlertMessage(this, "הודעת מערכת", Row.Name + " נמחק");
+                    Alert.AlertMessage(this, Row.Name + " נמחק");
                     GetDataToScreen();
 
 
@@ -60,13 +58,13 @@ namespace trackMe
                     switch (Row.SearchType)
                     {
                         case (int) SEARCH_TYPE.line:
-                            activity = new Intent(this, typeof(SrcByNum));
+                            activity = new Intent(this, typeof(SearchByNum));
                             break;
                         case (int)SEARCH_TYPE.train:
-                            activity = new Intent(this, typeof(Train));
+                            activity = new Intent(this, typeof(SearchTrain));
                             break;
                         case (int)SEARCH_TYPE.station:
-                            activity = new Intent(this, typeof(SrcByStation));
+                            activity = new Intent(this, typeof(SearchByStation));
                             break;
                         default:
                             return;
