@@ -18,7 +18,10 @@ namespace trackMe.BL
     class ApiService
     {
         const string BASE_URL = "http://www.ravgioraredler.co.il/api/tracks/getTracksData?url=";
-
+        const string AND_SIGN = "%26";
+        const string STATION_PARAM = "MonitoringRef=";
+        const string CALLS = "StopVisitDetailLevel=calls";
+        const string LINE_PARAM = "LineRef=";
 
         public async Task<ApiResponse> GetDataFromApi(string urlParam)
         {
@@ -47,31 +50,14 @@ namespace trackMe.BL
         // bus stop
         public string GetSrcUrl(string stationNum)
         {
-            const string AND_SIGN = "%26";
-            const string STATION_PARAM = "MonitoringRef=";
-            const string CALLS = "StopVisitDetailLevel=calls";
-
             return STATION_PARAM + stationNum + AND_SIGN + CALLS;
         }
 
-        // train station
-        public string GetSrcUrl(int stationNumber)
-        {
-            const string AND_SIGN = "%26";
-            const string STATION_PARAM = "MonitoringRef=";
-            const string CALLS = "StopVisitDetailLevel=calls";
-
-            return STATION_PARAM + stationNumber + AND_SIGN + CALLS;
-        }
 
         // bus line
         public string GetSrcUrl(Activity activity, int routeIdOfDirectionChoosen)
         {
-            const string AND_SIGN = "%26";
-            const string STATION_PARAM = "MonitoringRef=all";
-            const string LINE_PARAM = "LineRef=";
-            const string CALLS = "StopVisitDetailLevel=calls";
-
+            
             if (routeIdOfDirectionChoosen == 0)
             {
                 Alert.AlertMessage(activity, "מספר הקו לא מופיע במערכת");
@@ -80,9 +66,14 @@ namespace trackMe.BL
 
             else
             {
-                return STATION_PARAM + AND_SIGN + LINE_PARAM + routeIdOfDirectionChoosen + AND_SIGN + CALLS;
+                return STATION_PARAM + "all" + AND_SIGN + LINE_PARAM + routeIdOfDirectionChoosen + AND_SIGN + CALLS;
             }
         }
 
+        // train station
+        public string GetSrcUrl(int stationNumber)
+        {
+            return STATION_PARAM + stationNumber + AND_SIGN + CALLS;
+        }
     }
 }

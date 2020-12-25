@@ -116,20 +116,11 @@ namespace trackMe
             List<RouteData> directions = GetDirections(line, operatorText);
             List<string> optionalDirections = directions.Select(direction => direction.destination).ToList();
             Spinner spinner = FindViewById<Spinner>(Resource.Id.spinner);
-            spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
             var adapterForDirection = new ArrayAdapter<String>(this, Resource.Layout.list_item, optionalDirections);
             // var adapterForDirection = ArrayAdapter.CreateFromResource(this, Resource.Array.car_array, Android.Resource.Layout.SimpleSpinnerItem);
             adapterForDirection.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             spinner.Adapter = adapterForDirection;
         }
-
-        private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
-        {
-            Spinner spinner = (Spinner)sender;
-            string toast = string.Format("Selected car is {0}", spinner.GetItemAtPosition(e.Position));
-            Toast.MakeText(this, toast, ToastLength.Long).Show();
-        }
-
        
         public async void GetData(TableLayout mTableLayout, int routeIdOfDirectionChoosen, string favoriteUrl = "")
         {

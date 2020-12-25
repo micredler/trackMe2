@@ -34,7 +34,7 @@ namespace trackMe
         {
             TableLayout mTableLayout = FindViewById<TableLayout>(Resource.Id.table_favorite);
             List<FavoriteData> favorites = dBHelper.GetFavorites();
-            List<FavoriteElementId> favoritsElementsId = dataGenerator.setFavorites(favorites, this, Resources, this, mTableLayout);
+            List<FavoriteElementId> favoritsElementsId = dataGenerator.SetTableData(favorites, this, Resources, this, mTableLayout);
 
             SetFunctions(favoritsElementsId);
         }
