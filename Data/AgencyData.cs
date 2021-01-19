@@ -2,7 +2,7 @@
 
 namespace trackMe.Data
 {
-    public class Agency
+    public class AgencyData
     {
         [PrimaryKey, AutoIncrement]
         public int agency_id { get; set; }

@@ -70,7 +70,7 @@ namespace trackMe.Data
             try
             {
                 SQLiteConnection connection = dbConnection.CreateConnection();
-                List<Agency> agencyNames = connection.Query<Agency>($"SELECT agency_name FROM agency");
+                List<AgencyData> agencyNames = connection.Query<AgencyData>($"SELECT agency_name FROM agency");
 
                 return agencyNames.Select(s => s.agency_name).OfType<string>().ToArray();
             }
@@ -102,7 +102,7 @@ namespace trackMe.Data
             try
             {
                 SQLiteConnection connection = dbConnection.CreateConnection();
-                var agency = connection.Query<Agency>($"SELECT * FROM agency WHERE agency_name LIKE '%{agencyName}%'").First();
+                var agency = connection.Query<AgencyData>($"SELECT * FROM agency WHERE agency_name LIKE '%{agencyName}%'").First();
                 return agency.agency_id;
             }
 
