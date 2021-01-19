@@ -42,8 +42,8 @@ namespace trackMe.BL
 
             return shortDest;
         }
-        public List<FavoriteElementId> SetTableData(List<FavoriteData> favorites, Context context, Resources resources, Activity currentObj
-            , TableLayout mTableLayout)
+        public List<FavoriteElementId> SetTableData(List<FavoriteData> favorites,
+            Context context, Resources resources, TableLayout mTableLayout)
         {
             while (mTableLayout.ChildCount > 0)
             {
