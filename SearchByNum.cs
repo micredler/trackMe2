@@ -80,6 +80,7 @@ namespace trackMe
             AutoCompleteTextView operatorAutoComplete = (AutoCompleteTextView)sender;
             TextView txtLine = FindViewById<TextView>(Resource.Id.txt_line_num);
             string line = txtLine.Text;
+
             if (operatorAutoComplete.Text != "" && line != "")
             {
                 SetDataForSpinner(operatorAutoComplete.Text, line);
@@ -101,7 +102,6 @@ namespace trackMe
         }
         private void TextLineChange(object sender, Android.Text.TextChangedEventArgs e)
         {
-
             TextView txtLine = (TextView)sender;
             AutoCompleteTextView operatorAutoComplete = FindViewById<AutoCompleteTextView>(Resource.Id.autoComplete_operator);
 
@@ -130,6 +130,7 @@ namespace trackMe
             if (apiResponse.Siri != null)
             {
                 List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
+
                 if (visits.Count == 0)
                 {
                     Alert.AlertMessage(this, "לא נמצאו נסיעות קרובות לקו זה");

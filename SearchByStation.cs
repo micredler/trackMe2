@@ -66,6 +66,7 @@ namespace trackMe
             {
 
                 List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
+
                 if (visits.Count == 0)
                 {
                     Alert.AlertMessage(this, "לא נמצאו נסיעות קרובות לתחנה זו");

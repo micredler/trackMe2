@@ -37,10 +37,13 @@ namespace trackMe
                 labelFavorite.Visibility = Android.Views.ViewStates.Invisible;
                 labelFavorite.Text = "";
                 int stationNumber = FindTrainStationNumberByName(srcTrain.Text);
-                if (stationNumber == 0) { return; }
+                
+                if (stationNumber == 0)
+                {
+                    return;
+                }
 
                 GetData(stationNumber, mTableLayout);
-
             };
 
             btnFavorite.Click += delegate
