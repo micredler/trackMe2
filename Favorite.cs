@@ -66,7 +66,6 @@ namespace trackMe
                     activity.PutExtra("url", dBHelper.GetUrlFavoriteByName(Row.Name));
                     activity.PutExtra("searchName", Row.Name);
                     StartActivity(activity);
-
                 };
             }
 

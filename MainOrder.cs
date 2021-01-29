@@ -41,7 +41,6 @@ namespace trackMe
             {
                 StartActivity(typeof(SearchTrain));
             };
-
         }
     }
 }
