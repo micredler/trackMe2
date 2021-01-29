@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.Collections.Generic;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using trackMe.BL;
 using trackMe.Data;
@@ -23,9 +17,9 @@ namespace trackMe
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.favorite);
-            
+
             List<FavoriteData> favorites = dBHelper.GetFavorites();
-            
+
             GetDataToScreen();
 
         }
@@ -48,8 +42,6 @@ namespace trackMe
                     dBHelper.DeleteFavorite(this, Row.Name);
                     Alert.AlertMessage(this, Row.Name + " נמחק");
                     GetDataToScreen();
-
-
                 };
 
                 Row.Txt.Click += delegate
@@ -57,7 +49,7 @@ namespace trackMe
                     Intent activity;
                     switch (Row.SearchType)
                     {
-                        case (int) SEARCH_TYPE.line:
+                        case (int)SEARCH_TYPE.line:
                             activity = new Intent(this, typeof(SearchByNum));
                             activity.PutExtra("direction", (Row as FavoriteLineElementId).Direction);
                             break;
@@ -70,7 +62,7 @@ namespace trackMe
                         default:
                             return;
                     }
-                    
+
                     activity.PutExtra("url", dBHelper.GetUrlFavoriteByName(Row.Name));
                     activity.PutExtra("searchName", Row.Name);
                     StartActivity(activity);

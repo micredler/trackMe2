@@ -43,10 +43,12 @@ namespace trackMe
             btnFavorite.Click += delegate
             {
                 string favoriteName = "תחנה " + txtStation.Text;
-                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(txtStation.Text), (int) SEARCH_TYPE.station);
+                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(txtStation.Text), (int)SEARCH_TYPE.station);
             };
+
             string favoriteUrl = "";
             favoriteUrl = Intent.GetStringExtra("url");
+
             if (favoriteUrl != null && favoriteUrl != "")
             {
                 string searchName = Intent.GetStringExtra("searchName");
@@ -56,22 +58,13 @@ namespace trackMe
             }
         }
 
-        //public string GetSrcUrl(string stationNum)
-        //{
-        //    const string AND_SIGN = "%26";
-        //    const string STATION_PARAM = "MonitoringRef=";
-        //    const string CALLS = "StopVisitDetailLevel=calls";
-
-        //    return STATION_PARAM + stationNum + AND_SIGN + CALLS;
-        //}
-
         public async void GetData(string stationNum, TableLayout mTableLayout, string favoriteUrl = "")
         {
             string urlToSend = favoriteUrl != "" ? favoriteUrl : apiService.GetSrcUrl(stationNum);
             ApiResponse apiResponse = await apiService.GetDataFromApi(urlToSend);
             try
             {
-                
+
                 List<MonitoredStopVisit> visits = apiResponse.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit.ToList();
                 if (visits.Count == 0)
                 {
@@ -86,6 +79,6 @@ namespace trackMe
                 Alert.AlertMessage(this, "מספר התחנה לא מופיע במערכת");
             }
         }
-        
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Android.App;
 using Android.OS;
 using Android.Widget;
@@ -19,7 +18,7 @@ namespace trackMe
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.search_train);
-            
+
             string[] TRAIN_STATION = dbHelper.GetAllTrainStopsName();
 
             AutoCompleteTextView textView = FindViewById<AutoCompleteTextView>(Resource.Id.autocomplete_train);
@@ -48,13 +47,18 @@ namespace trackMe
             {
                 string favoriteName = "תחנת רכבת " + srcTrain.Text;
                 int stationNumber = FindTrainStationNumberByName(srcTrain.Text);
-                if (stationNumber == 0) { return; }
 
-                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(stationNumber), (int) SEARCH_TYPE.train); 
+                if (stationNumber == 0)
+                {
+                    return;
+                }
+
+                dbHelper.AddNewFavorite(this, favoriteName, apiService.GetSrcUrl(stationNumber), (int)SEARCH_TYPE.train);
             };
 
             string favoriteUrl = "";
             favoriteUrl = Intent.GetStringExtra("url");
+
             if (favoriteUrl != null && favoriteUrl != "")
             {
                 labelFavorite.Visibility = Android.Views.ViewStates.Visible;
@@ -73,8 +77,8 @@ namespace trackMe
             {
                 Alert.AlertMessage(this, "תחנת הרכבת לא מופיעה במערכת");
             }
-            return stationNumber;
 
+            return stationNumber;
         }
 
 
@@ -84,7 +88,7 @@ namespace trackMe
             ApiResponse apiResponse = await apiService.GetDataFromApi(urlToSend);
 
             if (apiResponse?.Siri?.ServiceDelivery?.StopMonitoringDelivery?[0]?.MonitoredStopVisit?.Count == 0)
-            { 
+            {
                 Alert.AlertMessage(this, "אין רכבות בתחנה ב30 הדקות הקרובות");
             }
 
@@ -94,7 +98,6 @@ namespace trackMe
                 DataGenerator dataGenerator = new DataGenerator();
                 dataGenerator.SetTableData(visits, mTableLayout, this, Resources, "station");
             }
-
         }
     }
 }
