@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Java.Util.Functions;
-using Org.Json;
 
 namespace trackMe.BL
 {
@@ -57,7 +47,7 @@ namespace trackMe.BL
         // bus line
         public string GetSrcUrl(Activity activity, int routeIdOfDirectionChoosen)
         {
-            
+
             if (routeIdOfDirectionChoosen == 0)
             {
                 Alert.AlertMessage(activity, "מספר הקו לא מופיע במערכת");
